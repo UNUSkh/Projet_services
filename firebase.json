@@ -2,8 +2,18 @@
   "hosting": [
     {
       "target": "newsapp",
-      "source": ".",
-      "frameworksBackend": {}
+      "public": "dist/newsapp/browser",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
     }
   ]
 }
