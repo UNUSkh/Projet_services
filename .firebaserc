@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "newsapp-47394": {
+      "hosting": {
+        "newsapp": [
+          "newsapp-47394"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "newsapp-47394"
+  }
+}
