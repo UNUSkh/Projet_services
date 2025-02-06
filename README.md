@@ -20,6 +20,14 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
+## Project Console: 
+
+https://console.firebase.google.com/project/newsapp-47394/overview
+
+## Hosting URL: 
+
+https://newsapp-47394.web.app 
+
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Further help
