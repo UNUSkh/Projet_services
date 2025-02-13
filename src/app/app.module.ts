@@ -9,6 +9,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { NewsListComponent } from './components/news-list/news-list.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import {HomeComponent} from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -17,11 +18,12 @@ import { RouterModule } from '@angular/router';
     AppComponent,
     NewsListComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
-    RouterModule,
+    RouterModule.forRoot([]),
     AppRoutingModule,
     HttpClientModule,
     provideFirebaseApp(() => initializeApp({"projectId":"newsapp-47394","appId":"1:817937810570:web:14a27c4723cc6e4f4b5973","storageBucket":"newsapp-47394.firebasestorage.app","apiKey":"AIzaSyAG09VdAuUlGNpVVdbzQCQxRoN5faLgwAk","authDomain":"newsapp-47394.firebaseapp.com","messagingSenderId":"817937810570","measurementId":"G-DLJX5B02YX"})),

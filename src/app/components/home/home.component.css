@@ -1,0 +1,83 @@
+/* Styles personnalisés */
+
+body {
+    font-family: Arial, sans-serif;
+}
+html, body {
+    height: 100%; /* Assure que toute la page prend la hauteur totale */
+    margin: 0; /* Évite les marges qui pourraient fausser l'affichage */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Fait en sorte que le contenu prenne l'espace restant */
+}
+
+header {
+    background-color: #ff0037;
+    color: white;
+}
+
+#datetime, #current-section, #news-ticker {
+    font-size: 14px;
+}
+
+.navbar {
+    background-color: #f8f9fa;
+}
+
+.navbar h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 1rem;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+footer p {
+    margin-bottom: 10;
+    display:grid;
+    
+}
+.current-section
+{
+    background-color: #ff0037;
+    color: #f8f9fa;
+}
+.social-icon  {
+    text-decoration: none; /* Supprime le soulignement */
+    color: gray; /* Fixe la couleur en blanc */
+}
+/* Styles pour les icônes sociales */
+.social-icons a {
+    display: inline-block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: scale(1.1); /* Agrandissement au survol */
+    filter: brightness(1.2); /* Augmenter la luminosité au survol */
+}
+
+.social-icons img {
+    width: 30px; /* Taille des icônes */
+    height: 30px;
+}
+
+.social-icons a:focus, .social-icons a:hover {
+    outline: none; /* Supprimer le contour bleu par défaut au survol */
+}
+.carousel-inner img {
+    max-height: 400px;
+    object-fit: cover;
+}
