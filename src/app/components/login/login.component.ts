@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,22 +9,51 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService,private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      pseudo: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      rememberMe: [false]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Inscription réussie', this.loginForm.value);
+      const { email, password } = this.loginForm.value;
+      this.errorMessage = null; 
+
+      try {
+        await this.authService.login(email, password);
+        console.log('Connexion réussie');
+        this.router.navigate(['/']);
+      } catch (error: any) {
+        this.handleError(error);
+        console.log("error")
+      }
     } else {
-      console.log('Veuillez remplir tous les champs correctement');
+      this.errorMessage = 'Veuillez remplir tous les champs correctement.';
     }
+  }
+
+  handleError(error: any) {
+    switch (error.code) {
+      case 'auth/invalid-email':
+        this.errorMessage = "L'email est invalide.";
+        break;
+      case 'auth/user-not-found':
+        this.errorMessage = "Aucun utilisateur trouvé avec cet email.";
+        break;
+      case 'auth/wrong-password':
+        this.errorMessage = "Mot de passe incorrect.";
+        break;
+      case 'auth/too-many-requests':
+        this.errorMessage = "Trop de tentatives. Réessayez plus tard.";
+        break;
+      default:
+        this.errorMessage = "Une erreur est survenue. Vérifiez vos informations.";
+        break;
+    };
+    console.log(this.errorMessage)
   }
 }
