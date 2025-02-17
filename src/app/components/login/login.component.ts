@@ -62,7 +62,8 @@ export class LoginComponent {
     try {
       await this.authService.loginWithGoogle();
       console.log("Connexion avec Google réussie !");
-      this.router.navigate(['/']);
+      
+      this.router.navigate(['/home']);
     } catch (error) {
       console.error("Erreur d'authentification Google :", error);
     }

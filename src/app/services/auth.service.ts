@@ -6,18 +6,73 @@ import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
   providedIn: 'root'
 })
 export class AuthService {
-  async loginWithGoogle(): Promise<UserCredential> {
+  constructor(private auth: Auth, private firestore: Firestore) {}
+  async loginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+    provider.addScope('https://www.googleapis.com/auth/user.gender.read');
+
     try {
-      const provider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(this.auth, provider);
-      await this.addUserToFirestore(userCredential.user.uid, userCredential.user.email);
-      return userCredential;
+      const result = await signInWithPopup(this.auth, provider);
+      const user = result.user;
+
+      if (!result) {
+        throw new Error('Google sign-in failed');
+      }
+
+     
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const accessToken = credential?.accessToken;
+
+      if (!accessToken) {
+        throw new Error('Access token not found');
+      }
+
+      
+      const response = await fetch('https://people.googleapis.com/v1/people/me?personFields=genders', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+     
+      const data = await response.json();
+    
+
+     
+      const gender = data.genders?.[0]?.value || 'not specified';
+
+     
+      const displayName = user.displayName || '';
+      const email = user.email || '';
+      const names = displayName.split(' ');
+      const firstName = names[0] || '';
+      const lastName = names.slice(1).join(' ') || '';
+
+      
+      const userRef = doc(this.firestore, 'users', user.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) {
+       
+        await setDoc(userRef, {
+          firstName,
+          lastName,
+          gender,
+          email,
+          createdAt: new Date(),
+          uid:user.uid
+        });
+       
+      } else {
+        console.log('Utilisateur déjà existant.');
+      }
+
+      return { firstName, lastName, gender, email };
     } catch (error) {
-      console.error("Erreur d'authentification avec Google :", error);
+      
       throw error;
     }
   }
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  
 
   async login(email: string, password: string): Promise<UserCredential> {
     try {
