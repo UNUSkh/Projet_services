@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, UserCredential, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, UserCredential, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from '@angular/fire/auth';
 import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class AuthService {
         throw new Error('Google sign-in failed');
       }
 
-     
+
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const accessToken = credential?.accessToken;
 
@@ -28,31 +28,31 @@ export class AuthService {
         throw new Error('Access token not found');
       }
 
-      
+
       const response = await fetch('https://people.googleapis.com/v1/people/me?personFields=genders', {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
-     
-      const data = await response.json();
-    
 
-     
+      const data = await response.json();
+
+
+
       const gender = data.genders?.[0]?.value || 'not specified';
 
-     
+
       const displayName = user.displayName || '';
       const email = user.email || '';
       const names = displayName.split(' ');
       const firstName = names[0] || '';
       const lastName = names.slice(1).join(' ') || '';
 
-      
+
       const userRef = doc(this.firestore, 'users', user.uid);
       const userDoc = await getDoc(userRef);
 
       if (!userDoc.exists()) {
-       
+
         await setDoc(userRef, {
           firstName,
           lastName,
@@ -61,18 +61,18 @@ export class AuthService {
           createdAt: new Date(),
           uid:user.uid
         });
-       
+
       } else {
         console.log('Utilisateur déjà existant.');
       }
 
       return { firstName, lastName, gender, email };
     } catch (error) {
-      
+
       throw error;
     }
   }
-  
+
 
   async login(email: string, password: string): Promise<UserCredential> {
     try {
@@ -120,6 +120,16 @@ export class AuthService {
       await signOut(this.auth);
     } catch (error) {
       console.error("Erreur de déconnexion :", error);
+      throw error;
+    }
+  }
+
+  async resetPassword(email: string): Promise<void> {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+      console.log('Email de réinitialisation envoyé');
+    } catch (error) {
+      console.error('Erreur lors de la réinitialisation du mot de passe:', error);
       throw error;
     }
   }

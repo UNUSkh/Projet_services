@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 
 registerLocaleData(localeFr);
@@ -26,7 +27,8 @@ registerLocaleData(localeFr);
     RegisterComponent,
     LoginComponent,
     HomeComponent,
-    
+    ForgotPasswordComponent,
+
 
   ],
   imports: [
@@ -40,7 +42,7 @@ registerLocaleData(localeFr);
     provideFirestore(() => getFirestore())
   ],
   providers: [AuthService,
-    { provide: LOCALE_ID, useValue: 'fr-FR' }], 
+    { provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

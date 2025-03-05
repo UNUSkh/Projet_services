@@ -11,12 +11,12 @@
             </div>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <h2>Se Connecter</h2>
-            
+
                 <div class="form-group">
                     <label>Email</label>
                     <input type="email" formControlName="email" placeholder="Entrez votre email">
                 </div>
-            
+
                 <div class="form-group">
                     <label>Mot de passe</label>
                     <div class="password-input">
@@ -28,15 +28,16 @@
                     {{ errorMessage }}
                 </div>
                 <button type="submit">Se connecter</button>
-            
-                
+
+
             </form>
-            <div class="or-text">Ou</div> 
+            <div class="or-text">Ou</div>
 
             <button type="button" class="google-btn" (click)="loginWithGoogle()">
                 Se connecter avec Google
                 <img src="assets/google.png" alt="Google Icon" class="google-icon">
             </button>
+            <a href="/forgot-password" class="forgot-password">Mot de passe oublié ?</a>
 
             <a href="/register"><p class="login-link">créer un compte</p></a>
         </div>
