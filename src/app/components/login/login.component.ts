@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,7 +12,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private authService: AuthService,private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -21,7 +22,7 @@ export class LoginComponent {
   async onSubmit() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.errorMessage = null; 
+      this.errorMessage = null;
 
       try {
         await this.authService.login(email, password);
@@ -29,7 +30,7 @@ export class LoginComponent {
         this.router.navigate(['/']);
       } catch (error: any) {
         this.handleError(error);
-        console.log("error")
+        console.log("Erreur :", error);
       }
     } else {
       this.errorMessage = 'Veuillez remplir tous les champs correctement.';
@@ -53,7 +54,18 @@ export class LoginComponent {
       default:
         this.errorMessage = "Une erreur est survenue. Vérifiez vos informations.";
         break;
-    };
-    console.log(this.errorMessage)
+    }
+    console.log("❗", this.errorMessage);
+  }
+
+  async loginWithGoogle() {
+    try {
+      await this.authService.loginWithGoogle();
+      console.log("Connexion avec Google réussie !");
+      
+      this.router.navigate(['/home']);
+    } catch (error) {
+      console.error("Erreur d'authentification Google :", error);
+    }
   }
 }
