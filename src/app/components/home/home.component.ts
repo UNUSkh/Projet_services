@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
     newsData: any[] = [];  // Déclare la variable qui contiendra les données
     today: Date = new Date();
     location: string = 'Chargement de la localisation...';
-    breakingNews: string = 'Chargement des actualités...';
+    randomNews: string = 'Chargement des actualités...';
   constructor( 
     private NewsService: NewsService,
     private authService: AuthService,
@@ -36,16 +36,16 @@ export class HomeComponent implements OnInit {
     this.authService.logout();
   }
   fetchBreakingNews(): void {
-    this.NewsService.getNews().subscribe(news => {
-      console.log("DD",news)
+    this.NewsService.getNews().subscribe(response => {
+      const news = response.data;
       if (news && news.length > 0) {
         const ri=Math.floor(Math.random()*news.length);
-        this.breakingNews=news[ri].title;
+        this.randomNews=news[ri].title;
       } else {
-        this.breakingNews = 'Aucune actualité disponible';
+        this.randomNews = 'Aucune actualité disponible';
       }
     }, error => {
-      this.breakingNews = 'Erreur lors du chargement des actualités';
+      this.randomNews = 'Erreur lors du chargement des actualités';
     });
   }
 }

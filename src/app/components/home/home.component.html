@@ -6,6 +6,7 @@
     <title>News Site</title>
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./home.component.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -15,8 +16,8 @@
         <div class="container d-flex justify-content-between align-items-center">
             <span id="today">{{ today | date:'full' }}</span>
             <span id="location">{{ location }}</span>
-            <span id=" bacurrent-section">Actualité </span>
-            <span id="news-ticker">{{breakingNews}} </span>
+            <span id=" actu">Actualité </span>
+            <span id="rn">{{randomNews}} </span>
             <div class="social-icons">
                 <a href="#" class="social-icon me-3" title="Facebook">
                     <i class="fab fa-facebook-f"></i>
@@ -35,15 +36,24 @@
     </nav>
     
     <header>
-        <div class="bg-dark text-light container d-flex justify-content-between align-items-center">
-            <span>Acceuil</span>
-            <span>Divertissement</span>
-            <span>Sport</span>
-            <span>Santé</span>
-            <span>Business</span>
-            <span>Science</span>
-            <span>Technologie</span>
+        <div id='menu'class="bg-dark text-light container d-flex justify-content-between align-items-center">
+            <span>Acceuil <hr></span>
+            <span>Divertissement<hr></span>
+            <span>Sport<hr></span>
+            <span>Santé<hr></span>
+            <span>Business<hr></span>
+            <span>Science<hr></span>
+            <span>Technologie<hr></span>
+            <button class="login-btn">
+                <i class="fa fa-user"></i>
+            </button>
+            <form class="search-form">
+                <input type="text" placeholder="Rechercher..." id="search-bar">
+                <button type="submit">🔍</button>
+            </form>
+           
             <span><button (click)="logout()">signe out</button></span>
+            <hr>
         </div>
     </header>
     
