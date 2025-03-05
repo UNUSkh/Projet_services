@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service'; 
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  errorMessage: string | null = null; 
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private authService: AuthService,private router: Router) {
     this.registerForm = this.fb.group({
@@ -29,21 +30,20 @@ export class RegisterComponent {
     return null;
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.registerForm.valid) {
       const { email, password } = this.registerForm.value;
+      this.errorMessage = null;
+      this.successMessage = null;
 
-      
-      this.authService.register(email, password)
-        .then(() => {
-          console.log('Inscription reussie');
-          this.router.navigate(['/login']);
-        })
-        .catch(error => {
-          this.handleError(error);
-        });
+      try {
+        await this.authService.register(email, password);
+        this.successMessage = "Inscription réussie ! Un email de vérification a été envoyé.";
+      } catch (error: any) {
+        this.errorMessage = "Erreur d'inscription : " + error.message;
+      }
     } else {
-      console.log('Formulaire invalide');
+      this.errorMessage = "Veuillez remplir tous les champs correctement.";
     }
   }
 

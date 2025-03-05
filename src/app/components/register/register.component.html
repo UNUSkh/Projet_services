@@ -5,14 +5,14 @@
                 <!-- You can add an image or a background here -->
             </div>
         </div>
-        
+
         <div class="right">
             <div class="logo">
                 <img src="assets/logo.png" alt="FlashActu Logo">
             </div>
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                 <h2>Inscription</h2>
-                
+
                 <div class="form-group">
                     <label>Email</label>
                     <input type="email" formControlName="email" placeholder="Entrez votre email">
@@ -21,7 +21,7 @@
                         <small *ngIf="registerForm.controls['email'].hasError('email')">L'email n'est pas valide.</small>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Pseudo</label>
                     <input type="text" formControlName="pseudo" placeholder="Votre pseudo">
@@ -29,7 +29,7 @@
                         <small *ngIf="registerForm.controls['pseudo'].hasError('required')">Le pseudo est requis.</small>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Mot de passe</label>
                     <div class="password-input">
@@ -40,7 +40,7 @@
                         <small *ngIf="registerForm.controls['password'].hasError('required')">Le mot de passe est requis.</small>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Confirmez votre mot de passe</label>
                     <div class="password-input">
@@ -51,17 +51,18 @@
                         <small *ngIf="registerForm.controls['confirmPassword'].hasError('required')">La confirmation du mot de passe est requise.</small>
                     </div>
                 </div>
-                
+
                 <div class="form-group checkbox">
                     <input type="checkbox" formControlName="rememberMe" id="remember">
                     <label for="remember">Se souvenir de moi</label>
                 </div>
+                <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
                 <div *ngIf="errorMessage" class="error-message">
                     {{ errorMessage }}
                 </div>
-                
+
                 <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
-                <a href="/login"><p class="login-link">J'ai déjà un compte ?</p></a> 
+                <a href="/login"><p class="login-link">J'ai déjà un compte ?</p></a>
             </form>
         </div>
     </div>
