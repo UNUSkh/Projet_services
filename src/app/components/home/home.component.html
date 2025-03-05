@@ -15,8 +15,8 @@
         <div class="container d-flex justify-content-between align-items-center">
             <span id="today">{{ today | date:'full' }}</span>
             <span id="location">{{ location }}</span>
-            <span id=" bacurrent-section">Rubrique: International</span>
-            <span id="news-ticker">Breaking News: </span>
+            <span id=" bacurrent-section">Actualité </span>
+            <span id="news-ticker">{{breakingNews}} </span>
             <div class="social-icons">
                 <a href="#" class="social-icon me-3" title="Facebook">
                     <i class="fab fa-facebook-f"></i>
@@ -30,20 +30,19 @@
             </div>
         </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <h1 class="navbar-brand">FlashActu</h1>
-            <p class="m-0">"Votre actu en un éclair."</p>
-        </div>
+    <nav class="navbar navbar-expand-lg "> 
+            <img style="width: 15%;" src="/assets/logo.png" alt="Logo">
     </nav>
     
     <header>
-        <div class="container d-flex justify-content-between align-items-center">
-            <span>Bonjour</span>
-            <span>Bonjour</span>
-            <span>Bonjour</span>
-            <span>Bonjour</span>
-            <span>Bonjour</span>
+        <div class="bg-dark text-light container d-flex justify-content-between align-items-center">
+            <span>Acceuil</span>
+            <span>Divertissement</span>
+            <span>Sport</span>
+            <span>Santé</span>
+            <span>Business</span>
+            <span>Science</span>
+            <span>Technologie</span>
             <span><button (click)="logout()">signe out</button></span>
         </div>
     </header>

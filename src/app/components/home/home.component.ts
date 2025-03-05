@@ -12,16 +12,17 @@ export class HomeComponent implements OnInit {
     newsData: any[] = [];  // Déclare la variable qui contiendra les données
     today: Date = new Date();
     location: string = 'Chargement de la localisation...';
-
+    breakingNews: string = 'Chargement des actualités...';
   constructor( 
     private NewsService: NewsService,
     private authService: AuthService,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+  
   
   ){}
 
   ngOnInit(): void {
-    
+    this.fetchBreakingNews();
     // Utilisation du service pour récupérer les données
     this.NewsService.getNews().subscribe(data => {
       this.newsData = data;  // Assigner les données récupérées à la variable
@@ -33,5 +34,18 @@ export class HomeComponent implements OnInit {
   
   logout() {
     this.authService.logout();
+  }
+  fetchBreakingNews(): void {
+    this.NewsService.getNews().subscribe(news => {
+      console.log("DD",news)
+      if (news && news.length > 0) {
+        const ri=Math.floor(Math.random()*news.length);
+        this.breakingNews=news[ri].title;
+      } else {
+        this.breakingNews = 'Aucune actualité disponible';
+      }
+    }, error => {
+      this.breakingNews = 'Erreur lors du chargement des actualités';
+    });
   }
 }

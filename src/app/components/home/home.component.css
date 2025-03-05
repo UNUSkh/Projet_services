@@ -15,8 +15,13 @@ main {
 }
 
 header {
-    background-color: #ff0037;
+    background-color:white;
     color: white;
+    margin:
+}
+header span:hover{
+    background-color: #ff0037;
+
 }
 
 #datetime, #current-section, #news-ticker {

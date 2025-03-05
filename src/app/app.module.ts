@@ -26,6 +26,7 @@ registerLocaleData(localeFr);
     RegisterComponent,
     LoginComponent,
     HomeComponent,
+    
 
   ],
   imports: [
