@@ -10,13 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+    
     <div class="py-3">
         <div class="container d-flex justify-content-between align-items-center">
-            <span id="datetime">icm</span>
-            <span id="datetime">15d</span>
-            <span id="datetime">Paris</span>
-            <span id="datetime">icd</span>
-            <span id="datetime">Lundi 12 Février 2025 - 14:30</span>
+            <span id="today">{{ today | date:'full' }}</span>
+            <span id="location">{{ location }}</span>
             <span id=" bacurrent-section">Rubrique: International</span>
             <span id="news-ticker">Breaking News: </span>
             <div class="social-icons">

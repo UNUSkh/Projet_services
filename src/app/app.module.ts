@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,11 @@ import {HomeComponent} from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -21,6 +26,7 @@ import { AuthService } from './services/auth.service';
     RegisterComponent,
     LoginComponent,
     HomeComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -32,7 +38,8 @@ import { AuthService } from './services/auth.service';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
   ],
-  providers: [AuthService], 
+  providers: [AuthService,
+    { provide: LOCALE_ID, useValue: 'fr-FR' }], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
