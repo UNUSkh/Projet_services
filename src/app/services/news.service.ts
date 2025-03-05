@@ -8,7 +8,7 @@ import { tap } from 'rxjs';
 })
 export class NewsService {
   private apiUrl = 'https://api.mediastack.com/v1/news';
-  private accessKey = 'b36ffc75bbc5e7adcaab91e336f8d048';
+  private accessKey = '9dcf55a5dede372df8285c4f3a87e22f';
 
   constructor(private http: HttpClient) { }
 
