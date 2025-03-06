@@ -1,51 +1,53 @@
 /* Styles personnalisés */
-
 body {
     font-family: Arial, sans-serif;
-}
-html, body {
-    height: 100%; /* Assure que toute la page prend la hauteur totale */
-    margin: 0; /* Évite les marges qui pourraient fausser l'affichage */
+    margin: 0;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-main {
-    flex: 1; /* Fait en sorte que le contenu prenne l'espace restant */
-}
-
 header {
-    background-color:white;
+    background-color: white;
     color: white;
 }
-header span{
+
+header span {
     position: relative;
     padding: 10px;
     transition: all 0.3s ease;
     text-align: center;
 }
-header span hr{
-    border: none;
-    height: 2px;
-    background-color: white;
-    width:0;  /* Pas de ligne visible initialement */
-    transition: width 0.3s ease; /* Ajoute une transition fluide */
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-header span:hover hr{
-    width: 100%;
-    color: white;
-    
-}
-header span:hover{
+
+header span:hover {
     background-color: #ff0037;
     padding: 20px;
-    border: white;
+    color: white;
+}
 
-#today, #location, #actu,#rn {
-    font-size: 14px;
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-form input {
+    border-radius: 20px;
+    padding: 10px;
+    width: 150px;
+}
+
+.search-form button {
+    background-color: #ff0037;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+    background-color: #e60029;
 }
 
 .navbar {
@@ -61,8 +63,6 @@ footer {
     background-color: #343a40;
     color: white;
     padding: 1rem;
-}
-footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -70,102 +70,68 @@ footer {
 }
 
 footer p {
-    margin-bottom: 10;
-    display:grid;
-    
+    margin: 0;
 }
-.current-section
-{
-    background-color: #ff0037;
-    color: #f8f9fa;
-}
-.social-icon  {
-    text-decoration: none; /* Supprime le soulignement */
-    color: gray; /* Fixe la couleur en blanc */
-}
-/* Styles pour les icônes sociales */
+
 .social-icons a {
-    display: inline-block;
+    text-decoration: none;
+    color: gray;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .social-icons a:hover {
-    transform: scale(1.1); /* Agrandissement au survol */
-    filter: brightness(1.2); /* Augmenter la luminosité au survol */
+    transform: scale(1.1);
+    filter: brightness(1.2);
 }
 
 .social-icons img {
-    width: 30px; /* Taille des icônes */
+    width: 30px;
     height: 30px;
 }
 
-.social-icons a:focus, .social-icons a:hover {
-    outline: none; /* Supprimer le contour bleu par défaut au survol */
-}
 .carousel-inner img {
     max-height: 400px;
     object-fit: cover;
 }
-}
-/* Barre de recherche */
-.search-form {
-    display: flex; /* Pour que l'input et le bouton soient alignés */
-    align-items: center;
-    border: 1px solid #ccc; /* Bordure de la barre de recherche */
-    border-radius: 20px; /* Bordures arrondies */
-    padding: 5px 10px;
-    background-color: #f8f9fa; /* Couleur de fond */
-}
-
-.search-form input {
+.card {
     border: none;
-    padding: 8px;
-    outline: none; /* Enlève le contour par défaut */
-    flex-grow: 1; /* Permet à l'input de prendre toute la largeur disponible */
-    border-radius: 20px;
-    font-size: 14px;
+    position: relative; /* Positionnement relatif nécessaire pour le positionnement absolu de l'overlay */
+    width: max-content;
+    height: max-content;
+    background: red;
 }
 
-.search-form button {
-    background-color: #ff0037; /* Couleur rouge du bouton */
-    color: white; /* Couleur du texte */
-    border: none;
-    padding: 8px 12px;
-    margin-left: 5px;
-    border-radius: 50%; /* Forme circulaire */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+/* Conteneur de l'image */
+.card-img-container {
+    position:relative;
+    width: 100%;
+    height: 100%;
 }
 
-.search-form button:hover {
-    background-color: #e60029; /* Changer la couleur du bouton au survol */
+/* L'image prend toute la largeur de la carte et ajuste la hauteur */
+.card-img-top {
+    width: 100%;
+    height: 100%; /* Ajuste la hauteur selon ce que tu souhaites */
+    object-fit: cover; /* L'image couvre toute la surface de la carte sans déformation */
 }
 
-.search-form input:focus {
-    background-color: #ffffff; /* Change le fond de l'input lorsqu'il est sélectionné */
-}
-/* Bouton de login */
-.login-btn {
+/* Le texte qui se superpose à l'image */
+.card-img-overlay {
+    position: absolute;
     display: flex;
-    align-items: center;
-    background-color: #ff0037; /* Couleur de fond du bouton */
+    flex-direction: column;
+    align-items: center; /* Centrer le texte horizontalement */
     color: white; /* Couleur du texte */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Animation fluide */
+    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour améliorer la lisibilité du texte */
+    padding: 10px;
 }
 
-.login-btn i {
-    margin-right: 8px; /* Espacement entre l'icône et le texte */
-    font-size: 18px; /* Taille de l'icône */
+.card-title {
+    font-size: 24px; /* Taille du titre */
+    font-weight: bold;
+    top: 20px;
 }
 
-.login-btn:hover {
-    background-color: #e60029; /* Changer la couleur au survol */
-}
-
-.login-btn:focus {
-    outline: none; /* Enlève le contour au focus */
+.card-text {
+    font-size: 16px; /* Taille du texte */
 }
