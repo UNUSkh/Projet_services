@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="py-3">
-        <div class="container d-flex justify-content-between align-items-center">
+        <div class="container-fluid  d-flex justify-content-between align-items-center">
             <span id="today">{{ today | date:'full' }}</span>
             <span id="location">{{ location }}</span>
             <span id="actu">Actualité</span>
@@ -31,7 +31,7 @@
     
 
     <header>
-        <div id="menu" class="bg-dark text-light container d-flex justify-content-between align-items-center">
+        <div id="menu" class="bg-dark text-light container-fluid d-flex justify-content-between align-items-center">
             <span>Accueil</span>
             <span>Divertissement</span>
             <span>Sport</span>
@@ -40,15 +40,10 @@
             <span>Science</span>
             <span>Technologie</span>
 
-            <!-- Search Bar -->
-            <form class="search-form d-flex align-items-center">
-                <input type="text" placeholder="Rechercher..." id="search-bar" class="form-control me-2">
-                <button type="submit" class="btn btn-outline-light">🔍</button>
-            </form>
 
             <!-- Login Button with Dropdown -->
             <div class="dropdown">
-                <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <button  type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-user"></i> Profil
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -59,11 +54,11 @@
             </div>
 
             <!-- Logout Button -->
-            <button class="btn btn-outline-light"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
+            <button id="logout"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
         </div>
     </header>
 <!---------------------Cartes&carousel------------------------------------------------->
-    <main class="container mt-4">
+    <main class="container-fluid mt-4">
         <div class="row">
             <div class="col-lg-6 mb-4">
                 <div class="card border-0 shadow-lg" style="height: 100%;" >
@@ -104,9 +99,9 @@
                     </div>
                 </div>
     
-                <div class="row mt-4 bg-dark ">
+                <div class="row mt-4">
                     <div>
-                        <div class="card border-0 shadow-sm bg-danger "style="width: 100%;height: 65%;">
+                        <div class="card border-0 shadow-sm"style="width: 100%;height: 65%;">
                             <div class="card-img-container"style="width: 100%;height: 100%;">
                                 <img src="https://www.elprogreso.es/media/elprogreso/images/2025/02/07/2025020712015348615.jpg" class="card-img-top" alt="...">
                                 <div class="card-img-overlay">
@@ -121,11 +116,11 @@
             </div>
         </div>
 
-<br><br><br><br><br><br>
+<br>
  <!-- Carousel ---------------------------------------------------------------------------->
 <div class="row">
-    <div class="col-8 ">
-        <h4 style="color: red;font-weight: bold;">Découvrez vos News</h4>
+    <div class="col-lg-8 mt-4 mb-4">
+        <h4 style="color: red;font-weight: bolder;">Découvrez vos News</h4>
         <hr style="color: red;font-weight: bold;">
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -148,8 +143,9 @@
               <span class="visually-hidden">Next</span>
             </button>
           </div>
-        <div class="row">
-            <div class="col-md-4">
+<!------- Images à droite ----------------------------------------------------------------------------->
+        <div class="row mt-3">
+            <div class="col-lg-4">
                 <div class="card mb-4" style="max-width: 540px; max-height: 100px;">
                     <div class="row g-0">
                       <!-- Image à gauche -->
@@ -211,16 +207,27 @@
             </div>
         </div>
     </div>
-    <div class="col-4">
-            <ul class="d-flex me-3">
-                <li  class="btn " style="color: red;font-weight: bold;">Récent</li>
-                <li  class="btn ms-3 " style="color: red;font-weight: bold;">Tendances</li>
-                <li  class="btn ms-3 " style="color: red;font-weight: bold;">Plus vues</li>
-                   
+    <div class="col-lg">
+        <div class="dropdown d-lg-none container-fluid">
+            <button class="btn btn-outline-danger dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                Catégories
+            </button>
+            <ul id="id2" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <h4><a class="dropdown-item" href="#">Récent</a></h4>
+                <h4><a class="dropdown-item" href="#">Tendances</a></h4>
+                <h4><a class="dropdown-item" href="#">Plus vues</a></h4>
             </ul>
-        <hr class="mt-0" style="color: red;font-weight: bold;">
+        </div>
+        <!-- Sections "Récent", "Tendances", "Plus vues" en version normale pour grand écran -->
+        <ul style="color: red;font-weight: bold;"class="mt-0 d-none d-lg-flex flex-wrap justify-content-between me-3">
+            <button class="btn"><h4>Récent</h4></button>
+            <button class="btn"><h4>Tendances</h4></button>
+            <button class="btn"><h4>Plus vues</h4></button>
+        </ul>
         
-        <div class="card mb-4" style="max-width: 540px; max-height: 100px;">
+        <hr style="color: red;font-weight: bold;">
+        
+        <div class="card mb-3" style="max-width: 540px; max-height: 100px;">
             <div class="row g-0">
               <!-- Image à gauche -->
               <div class="col-md-4">
@@ -283,5 +290,6 @@
     <footer class="bg-dark text-white text-center py-3">
         <p>&copy; 2025 Mon Site de News - Tous droits réservés</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
