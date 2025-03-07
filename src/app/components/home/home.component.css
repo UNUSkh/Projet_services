@@ -93,45 +93,58 @@ footer p {
     max-height: 400px;
     object-fit: cover;
 }
+/* Conteneur de la carte - avec des bordures arrondies et de l'ombre */
+/* Appliquer un fond transparent à la carte */
 .card {
-    border: none;
-    position: relative; /* Positionnement relatif nécessaire pour le positionnement absolu de l'overlay */
-    width: max-content;
-    height: max-content;
-    background: red;
+    border-radius: 15px; /* Bordures arrondies */
+    overflow: hidden; /* Empêche que le contenu dépasse la carte */
 }
 
-/* Conteneur de l'image */
-.card-img-container {
-    position:relative;
-    width: 100%;
-    height: 100%;
-}
-
-/* L'image prend toute la largeur de la carte et ajuste la hauteur */
+/* Effet sur l'image */
 .card-img-top {
     width: 100%;
-    height: 100%; /* Ajuste la hauteur selon ce que tu souhaites */
+    height: 100%;
     object-fit: cover; /* L'image couvre toute la surface de la carte sans déformation */
+    transition: transform 0.3s ease; /* Animation de l'image */
 }
 
-/* Le texte qui se superpose à l'image */
+.card-img-top:hover {
+    transform: scale(1.1); /* Zoom léger sur l'image lors du survol */
+}
+
+/* Superposition du texte sur l'image */
 .card-img-overlay {
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centrer le texte horizontalement */
-    color: white; /* Couleur du texte */
-    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour améliorer la lisibilité du texte */
+    justify-content: center;
+    align-items: center;
+    color: white;
     padding: 10px;
+    text-align: center;
 }
 
-.card-title {
-    font-size: 24px; /* Taille du titre */
-    font-weight: bold;
-    top: 20px;
+/* Ombre autour de la carte pour la mettre en évidence */
+.card.border-0 {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.card-text {
-    font-size: 16px; /* Taille du texte */
+/* Ajout d'un espacement entre les cartes */
+.mb-4 {
+    margin-bottom: 1.5rem; /* Marge entre les cartes */
+}
+
+/* Pour les petits écrans, ajuster la taille des cartes */
+@media (max-width: 768px) {
+    .col-lg-6 {
+        margin-bottom: 1.5rem; /* Ajout d'une marge en bas pour la version mobile */
+    }
+    .col-lg-4 {
+        margin-bottom: 1.5rem;
+    }
 }

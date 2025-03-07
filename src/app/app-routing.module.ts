@@ -8,7 +8,7 @@ import { AuthGuard } from './services/auth.guard';
 import { NewsListComponent } from './components/news-list/news-list.component';
 
 const routes: Routes = [
-  { path: 'home',  component: HomeComponent },
+  { path: '',  component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
