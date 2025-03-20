@@ -1,69 +1,81 @@
-<div class="page-container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inscription - FlashActu</title>
+  <link rel="stylesheet" href="/register.component.css">
+</head>
+<body>
+  <div class="page-container">
     <div class="container">
-        <div class="image-container">
-            <div class="left">
-                <!-- You can add an image or a background here -->
-            </div>
+      <!-- Left side: Background image (hidden on mobile) -->
+      <div class="image-container">
+        <div class="left">
+          <!-- Optionally add overlay text or additional content here -->
         </div>
-
-        <div class="right">
-            <div class="logo">
-                <img src="assets/logo.png" alt="FlashActu Logo">
-            </div>
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <h2>Inscription</h2>
-
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" formControlName="email" placeholder="Entrez votre email">
-                    <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="error-message">
-                        <small *ngIf="registerForm.controls['email'].hasError('required')">L'email est requis.</small>
-                        <small *ngIf="registerForm.controls['email'].hasError('email')">L'email n'est pas valide.</small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Pseudo</label>
-                    <input type="text" formControlName="pseudo" placeholder="Votre pseudo">
-                    <div *ngIf="registerForm.controls['pseudo'].invalid && registerForm.controls['pseudo'].touched" class="error-message">
-                        <small *ngIf="registerForm.controls['pseudo'].hasError('required')">Le pseudo est requis.</small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Mot de passe</label>
-                    <div class="password-input">
-                        <input type="password" formControlName="password" placeholder="Entrez votre mot de passe">
-                        <span class="eye-icon">👁</span>
-                    </div>
-                    <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="error-message">
-                        <small *ngIf="registerForm.controls['password'].hasError('required')">Le mot de passe est requis.</small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Confirmez votre mot de passe</label>
-                    <div class="password-input">
-                        <input type="password" formControlName="confirmPassword" placeholder="Confirmez votre mot de passe">
-                        <span class="eye-icon">👁</span>
-                    </div>
-                    <div *ngIf="registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].touched" class="error-message">
-                        <small *ngIf="registerForm.controls['confirmPassword'].hasError('required')">La confirmation du mot de passe est requise.</small>
-                    </div>
-                </div>
-
-                <div class="form-group checkbox">
-                    <input type="checkbox" formControlName="rememberMe" id="remember">
-                    <label for="remember">Se souvenir de moi</label>
-                </div>
-                <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-                <div *ngIf="errorMessage" class="error-message">
-                    {{ errorMessage }}
-                </div>
-
-                <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
-                <a href="/login"><p class="login-link">J'ai déjà un compte ?</p></a>
-            </form>
+      </div>
+      <!-- Right side: Registration Form -->
+      <div class="right">
+        <div class="logo">
+          <img src="assets/logo.png" alt="FlashActu Logo">
         </div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <h2>Inscription</h2>
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" placeholder="Entrez votre email">
+            <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="error-message">
+              <small *ngIf="registerForm.controls['email'].hasError('required')">L'email est requis.</small>
+              <small *ngIf="registerForm.controls['email'].hasError('email')">L'email n'est pas valide.</small>
+            </div>
+          </div>
+          <!-- Pseudo Field -->
+          <div class="form-group">
+            <label for="pseudo">Pseudo</label>
+            <input type="text" id="pseudo" formControlName="pseudo" placeholder="Votre pseudo">
+            <div *ngIf="registerForm.controls['pseudo'].invalid && registerForm.controls['pseudo'].touched" class="error-message">
+              <small *ngIf="registerForm.controls['pseudo'].hasError('required')">Le pseudo est requis.</small>
+            </div>
+          </div>
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <div class="password-input">
+              <input type="password" id="password" formControlName="password" placeholder="Entrez votre mot de passe">
+              <span class="eye-icon">👁</span>
+            </div>
+            <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="error-message">
+              <small *ngIf="registerForm.controls['password'].hasError('required')">Le mot de passe est requis.</small>
+            </div>
+          </div>
+          <!-- Confirm Password Field -->
+          <div class="form-group">
+            <label for="confirmPassword">Confirmez votre mot de passe</label>
+            <div class="password-input">
+              <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirmez votre mot de passe">
+              <span class="eye-icon">👁</span>
+            </div>
+            <div *ngIf="registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].touched" class="error-message">
+              <small *ngIf="registerForm.controls['confirmPassword'].hasError('required')">La confirmation du mot de passe est requise.</small>
+            </div>
+          </div>
+          <!-- Checkbox -->
+          <div class="form-group checkbox">
+            <input type="checkbox" id="remember" formControlName="rememberMe">
+            <label for="remember">Se souvenir de moi</label>
+          </div>
+          <!-- Success & Error messages -->
+          <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+          <!-- Submit Button -->
+          <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+        </form>
+        <!-- Link to Login -->
+        <a href="/login" class="login-link">J'ai déjà un compte ?</a>
+      </div>
     </div>
-</div>
+  </div>
+</body>
+</html>
