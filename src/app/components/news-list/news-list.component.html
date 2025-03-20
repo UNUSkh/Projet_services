@@ -1,15 +1,261 @@
-<div class="container mt-4">
-  <h2 class="mb-4">Actualités Tennis</h2>
-  <div class="row">
-      <div class="col-md-4" *ngFor="let article of news">
-          <div class="card">
-              <img [src]="article.image || 'assets/logo.png'" class="card-img-top" *ngIf="article.image">
-              <div class="card-body">
-                  <h5 class="card-title">{{ article.title }}</h5>
-                  <p class="card-text">{{ article.description }}</p>
-                  <a [href]="article.url" target="_blank" class="btn btn-primary">Lire plus</a>
-              </div>
-          </div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlashActu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="news-list.component.css">
+</head>
+<body>
+  <div class="container-fluid p-0">
+    <!-- Barre supérieure -->
+    <div class="bg-light py-1 px-3 d-flex justify-content-between align-items-center small">
+      <div>
+        <span class="me-3"><i class="fas fa-map-marker-alt"></i> Paris</span>
+        <span><i class="far fa-calendar-alt me-1"></i> {{ currentDate | date: 'EEEE, dd MMMM yyyy' }}</span>
       </div>
+      <div class="d-flex align-items-center">
+        <span class="badge bg-danger me-3">Actualité</span>
+        <div class="d-flex">
+          <a href="#" class="ms-2 text-primary"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="ms-2 text-info"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="ms-2 text-danger"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="ms-2 text-danger"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo et baseline -->
+    <div class="container py-2">
+      <div class="d-flex justify-content-start">
+        <div>
+          <a href="#" class="text-decoration-none">
+            <div class="d-flex flex-column align-items-start">
+              <div class="bg-danger text-white px-3 py-2 rounded">
+                <h3 class="m-0 fw-bold">FlashActu</h3>
+              </div>
+              <div class="text-muted small mt-1">Votre actu en un éclair</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu principal -->
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <div class="container">
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a routerLink="/home" class="nav-link" (click)="filterNewsByCategory('all')" [class.active]="activeCategory === 'all'">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/home" class="nav-link" (click)="filterNewsByCategory('Divertissement')" [class.active]="activeCategory === 'divertissement'">Divertissement</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/home" class="nav-link" (click)="filterNewsByCategory('Sport')" [class.active]="activeCategory === 'sport'">Sport</a></li>
+            <li class="nav-item">
+              <a routerLink="/home" class="nav-link" (click)="filterNewsByCategory('Santé')" [class.active]="activeCategory === 'santé'">Santé</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/home" class="nav-link" (click)="filterNewsByCategory('Business')" [class.active]="activeCategory === 'business'">Business</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/home" class="nav-link" (click)="filterNewsByCategory('Science')" [class.active]="activeCategory === 'science'">Science</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/home" class="nav-link" (click)="filterNewsByCategory('Technologies')" [class.active]="activeCategory === 'technologies'">Technologies</a>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center text-white">
+            <a routerLink="/home" class="text-white me-3"><i class="fas fa-user"></i></a>
+            <form class="d-flex">
+              <input class="form-control form-control-sm me-2" type="search" placeholder="Rechercher">
+              <button class="btn btn-sm btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div *ngIf="isLoading" class="loading-spinner">
+      <div class="spinner-border" role="status"></div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+    <!-- Articles à la une -->
+    <div class="container mt-4">
+      <!-- Premier article principal (grand) -->
+      <div class="row mb-4">
+        <div class="col-lg-8 mb-4">
+          <div *ngFor="let article of newsData.slice(0, 1)" class="position-relative">
+            <div class="position-absolute top-0 start-0 m-2">
+              <span class="badge bg-primary">{{ article.category }}</span>
+            </div>
+            <img [src]="article.image && article.image.trim() !== '' ? article.image : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'" class="img-fluid w-100" style="height: 400px; object-fit: cover;" alt="Article principal" (click)="goToArticle(article.url)">
+            <div class="position-absolute bottom-0 start-0 p-3 text-white" style="background: linear-gradient(transparent, rgba(0,0,0,0.8)); width: 100%;">
+              <small>Paris le {{ currentDate | date: 'dd/MM/yyyy' }}</small>
+              <h2 class="fw-bold">{{ article.title || 'Face À Donald Trump, L\'Union Européenne Dévoile Sa "Boussole De Compétitivité"' }}</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="row g-3">
+            <div class="col-12" *ngFor="let article of newsData.slice(1,3)">
+              <div class="position-relative">
+                <div class="position-absolute top-0 start-0 m-2">
+                  <span class="badge" [ngClass]="'bg-' + (article.category === 'Sport' ? 'warning' : article.category === 'Santé' ? 'success' : 'primary')">{{ article.category }}</span>
+                </div>
+                <img [src]="article.image && article.image.trim() !== '' ? article.image : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'" class="img-fluid w-100" style="height: 190px; object-fit: cover;" alt="Article">
+                <div class="position-absolute bottom-0 start-0 p-2 text-white" style="background: linear-gradient(transparent, rgba(0,0,0,0.8)); width: 100%;">
+                  <small>Paris le {{ currentDate | date: 'dd/MM/yyyy' }}</small>
+                  <h6 class="fw-bold">{{ article.title || 'Titre par défaut' }}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-12">
+          <div *ngFor="let article of newsData.slice(4, 5)">
+            <div class="position-relative">
+              <div class="position-absolute top-0 start-0 m-2">
+                <span class="badge" [ngClass]="'bg-' + (article.category === 'Science' ? 'info' : 'primary')">{{ article.category }}</span>
+              </div>
+              <img [src]="article.image && article.image.trim() !== '' ? article.image : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'" class="img-fluid w-100" style="height: 300px; object-fit: cover;" alt="Article principal">
+              <div class="position-absolute bottom-0 start-0 p-3 text-white" style="background: linear-gradient(transparent, rgba(0,0,0,0.8)); width: 100%;">
+                <small>Paris le {{ currentDate | date: 'dd/MM/yyyy' }}</small>
+                <h3 class="fw-bold">{{ article.title || 'Paris Science Summit 2025 : Deux Jours Au Cœur De La Science Et De L\'innovation Avec Le Point Et La Région Île-De-France' }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section "Découvrez vos News" -->
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="text-danger m-0">Découvrez vos News</h2>
+          <div>
+            <button class="btn btn-sm btn-outline-secondary active me-2">Récent</button>
+            <button class="btn btn-sm btn-outline-secondary me-2">Tendance</button>
+            <button class="btn btn-sm btn-outline-secondary">Plus vues</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Articles principaux -->
+          <div class="col-lg-8">
+            <!-- Article en vedette avec image complète -->
+            <div *ngFor="let article of newsData.slice(5,6)" class="position-relative mb-4">
+              <div class="position-absolute top-0 start-0 m-2">
+                <span class="badge" [ngClass]="'bg-' + (article.category === 'Technologies' ? 'info' : 'primary')">{{ article.category || 'Technologies' }}</span>
+              </div>
+              <img [src]="article.image && article.image.trim() !== '' ? article.image : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'" class="img-fluid w-100" style="height: 400px; object-fit: cover;" alt="Article">
+              <div class="position-absolute bottom-0 start-0 p-3 text-white" style="background: linear-gradient(transparent, rgba(0,0,0,0.8)); width: 100%;">
+                <small>Paris le {{ currentDate | date: 'dd/MM/yyyy' }}</small>
+                <h3 class="fw-bold">{{ article.title || '"Parlons d\'autre chose" : on a testé l\'IA chinoise DeepSeek, qui n\'échappe pas à la censure' }}</h3>
+                <p>{{ article.description || 'L\'essor de DeepSeek, la rivale chinoise de ChatGPT, illustre parfaitement l\'ambition des hautes technologies. Mais le robot conversationnel qui fait beaucoup parler de lui reste très surveillé, notamment quand on l\'interroge sur des sujets sensibles.' }}</p>
+              </div>
+            </div>
+
+            <!-- Petits articles en ligne -->
+            <div class="row g-3">
+              <div class="col-lg-4" *ngFor="let article of newsData.slice(6, 9)">
+                <div class="card border-0 shadow-sm h-100">
+                  <img [src]="article.image && article.image.trim() !== '' ? article.image : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'" class="card-img-top" style="height: 120px; object-fit: cover;" alt="Article">
+                  <div class="card-body p-2">
+                    <small class="text-muted d-block mb-1">Publié le {{ currentDate | date: 'dd/MM/yyyy' }}</small>
+                    <h6 class="card-title mb-0">{{ article.title || 'Titre par défaut' }}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar avec dernières nouvelles -->
+          <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+              <div class="card-header bg-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="m-0">Récent</h5>
+                  <div>
+                    <button class="btn btn-sm btn-link text-decoration-none">Tendance</button>
+                    <button class="btn btn-sm btn-link text-decoration-none">Plus vues</button>
+                  </div>
+                </div>
+              </div>
+              <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action d-flex align-items-center p-3" *ngFor="let article of newsData.slice(9, 15)">
+                  <img [src]="article.image && article.image.trim() !== '' ? article.image : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'" class="me-3 rounded" style="width: 70px; height: 60px; object-fit: cover;" alt="News thumbnail">
+                  <div>
+                    <h6 class="mb-1 small">{{ article.title || 'Titre par défaut' }}</h6>
+                    <small class="text-muted">Publié le {{ currentDate | date: 'dd/MM/yyyy' }}</small>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 mb-4">
+            <div class="bg-danger text-white px-3 py-2 rounded d-inline-block mb-2">
+              <h4 class="m-0 fw-bold">FlashActu</h4>
+            </div>
+            <p class="small">Votre actu en un éclair</p>
+            <p class="small">© 2025 Votre actu en un éclair. Tous droits réservés.</p>
+            <div class="d-flex mt-3">
+              <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-5 mb-4">
+            <h5 class="mb-3">Categories</h5>
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-unstyled">
+                  <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 badge bg-danger">Tendance</a></li>
+                  <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 badge bg-warning">Sport</a></li>
+                  <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 badge bg-info">Science</a></li>
+                  <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 badge bg-primary">Business</a></li>
+                </ul>
+              </div>
+              <div class="col-6">
+                <ul class="list-unstyled">
+                  <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 badge bg-secondary">Divertissement</a></li>
+                  <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 badge bg-info">Technologies</a></li>
+                  <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 badge bg-success">Santé</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <h5 class="mb-3">Mon compte</h5>
+            <div class="card bg-dark border border-secondary p-3">
+              <div class="text-center mb-3">
+                <i class="fas fa-user-circle fa-3x text-light"></i>
+              </div>
+              <input type="text" class="form-control mb-2" placeholder="Jean-François Dupont" readonly>
+              <button class="btn btn-danger w-100">Se déconnecter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
-</div>
+</body>
+</html>

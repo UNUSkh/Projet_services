@@ -1,0 +1,29 @@
+<div class="news-card" [ngClass]="size">
+  <div class="card-image">
+    <span class="category-badge">{{getCategoryDisplay()}}</span>
+    <a [href]="newsItem.url" target="_blank">
+      <img [src]="getImageUrl()" [alt]="newsItem.title" onerror="this.src='assets/default.png'">
+    </a>
+  </div>
+
+  <div class="card-content">
+    <div class="card-meta">
+      <span class="publish-date">{{formattedDate}}</span>
+      <span class="source" *ngIf="newsItem.source">· {{newsItem.source}}</span>
+    </div>
+
+    <h3 class="card-title">
+      <a [href]="newsItem.url" target="_blank">
+        {{truncateTitle(newsItem.title)}}
+      </a>
+    </h3>
+
+    <p class="card-excerpt" *ngIf="showExcerpt && newsItem.description">
+      {{truncateDescription(newsItem.description)}}
+    </p>
+
+    <div class="card-footer" *ngIf="newsItem.author">
+      <span class="author">Par {{newsItem.author}}</span>
+    </div>
+  </div>
+</div>

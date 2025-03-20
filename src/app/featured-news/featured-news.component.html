@@ -1,0 +1,33 @@
+<section class="featured-news-section">
+  <div class="section-title">
+    <h2>À la une</h2>
+  </div>
+
+  <div class="loading-spinner" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Chargement des actualités...</p>
+  </div>
+
+  <div class="error-message" *ngIf="!isLoading && errorMessage">
+    <p>{{errorMessage}}</p>
+  </div>
+
+  <div class="featured-grid" *ngIf="!isLoading && !errorMessage && featuredNews.length > 0">
+    <div class="featured-main" *ngIf="featuredNews[0]">
+      <app-news-card
+        [newsItem]="featuredNews[0]"
+        size="large"
+        [showExcerpt]="true">
+      </app-news-card>
+    </div>
+
+    <div class="featured-secondary">
+      <app-news-card
+        *ngFor="let news of featuredNews.slice(1, 4)"
+        [newsItem]="news"
+        size="medium"
+        [showExcerpt]="false">
+      </app-news-card>
+    </div>
+  </div>
+</section>
