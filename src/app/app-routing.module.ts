@@ -9,7 +9,7 @@ import { NewsListComponent } from './components/news-list/news-list.component';
 
 const routes: Routes = [
   { path: '',  component: HomeComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: NewsListComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent}

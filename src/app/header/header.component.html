@@ -1,0 +1,24 @@
+<div class="header-container">
+  <div class="top-bar">
+    <div class="location-weather">
+      <span class="temperature">{{temperature}} {{location}}</span>
+      <span class="date">{{ currentDate | date:'EEEE, d MMMM yyyy':'':'fr' }}</span>
+    </div>
+    <div class="category-tag">Actualité</div>
+    <div class="social-links">
+      <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" class="social-icon">
+        <i [class]="social.icon"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="logo-container">
+    <div class="logo">
+      <a routerLink="/">
+        <img src="assets/logo.png" alt="FlashActu Logo" *ngIf="false">
+        <div class="brand-name">{{logo}}</div>
+        <div class="tagline">{{tagline}}</div>
+      </a>
+    </div>
+  </div>
+</div>

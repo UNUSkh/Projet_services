@@ -1,0 +1,38 @@
+<nav class="main-nav">
+  <div class="nav-container">
+    <ul class="nav-links">
+      <li *ngFor="let item of navItems" [ngClass]="{'active': item.active}">
+        <a (click)="navigateToCategory(item.category)" role="button">{{item.label}}</a>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <div class="user-profile" *ngIf="isLoggedIn">
+        <a routerLink="/profile">
+          <i class="fa fa-user"></i>
+        </a>
+      </div>
+
+      <div class="auth-buttons" *ngIf="!isLoggedIn">
+        <a routerLink="/login" class="login-btn">Se connecter</a>
+        <a routerLink="/register" class="register-btn">S'inscrire</a>
+      </div>
+
+      <div class="logout-button" *ngIf="isLoggedIn">
+        <button (click)="logout()" class="logout-btn">Se déconnecter</button>
+      </div>
+
+      <div class="search-container" [ngClass]="{'active': isSearchVisible}">
+        <button class="search-toggle" (click)="toggleSearch()">
+          <i class="fa fa-search"></i>
+        </button>
+        <div class="search-input" *ngIf="isSearchVisible">
+          <input type="text" [(ngModel)]="searchQuery" placeholder="Rechercher" (keyup.enter)="search()">
+          <button class="submit-search" (click)="search()">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
