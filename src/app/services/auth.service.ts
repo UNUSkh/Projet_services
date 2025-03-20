@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, UserCredential, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, sendEmailVerification } from '@angular/fire/auth';
-import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
+import { doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -84,19 +84,19 @@ export class AuthService {
     }
   }
 
-  async register(email: string, password: string): Promise<UserCredential> {
+  async register(email: string, password: string,firstName: string, lastName: string): Promise<UserCredential> {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       await this.sendemailVerification(userCredential.user);
 
-      await this.addUserToFirestore(userCredential.user.uid, userCredential.user.email);
+      await this.addUserToFirestore(userCredential.user.uid, userCredential.user.email, firstName, lastName);
       return userCredential;
     } catch (error) {
       console.error("Erreur d'inscription :", error);
       throw error;
     }
   }
-  private async addUserToFirestore(uid: string, email: string | null): Promise<void> {
+  private async addUserToFirestore(uid: string, email: string | null,firstName: string, lastName: string): Promise<void> {
     if (!email) return;
 
     const userRef = doc(this.firestore, `users/${uid}`);
@@ -106,8 +106,8 @@ export class AuthService {
       await setDoc(userRef, {
         uid: uid,
         email: email,
-        firstName: "",
-        lastName: "",
+        firstName: firstName,
+        lastName: lastName,
         gender: "",
         verified: false,
         createdAt: new Date()
@@ -115,6 +115,26 @@ export class AuthService {
       console.log("Utilisateur ajouté à Firestore !");
     } else {
       console.log("L'utilisateur existe déjà dans Firestore.");
+    }
+  }
+  async getUserProfile(uid: string) {
+    const userRef = doc(this.firestore, 'users', uid);
+    const userDoc = await getDoc(userRef);
+    if (userDoc.exists()) {
+      return userDoc.data();
+    } else {
+      throw new Error('Utilisateur non trouvé');
+    }
+  }
+
+  async updateUserProfile(uid: string, updatedData: any) {
+    const userRef = doc(this.firestore, 'users', uid);
+    try {
+      await updateDoc(userRef, updatedData);
+      console.log("Profil mis à jour avec succès");
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du profil:', error);
+      throw new Error("Erreur lors de la mise à jour du profil");
     }
   }
 

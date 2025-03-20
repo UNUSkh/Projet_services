@@ -24,6 +24,7 @@ import { NewsCardComponent } from './components/news-card/news-card.component';
 import { FeaturedNewsComponent } from './components/featured-news/featured-news.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchComponent } from './components/search/search.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 registerLocaleData(localeFr);
@@ -31,6 +32,7 @@ registerLocaleData(localeFr);
 @NgModule({
   declarations: [
     AppComponent,
+    FeaturedNewsComponent,
     NewsListComponent,
     RegisterComponent,
     LoginComponent,
@@ -40,9 +42,9 @@ registerLocaleData(localeFr);
     HeaderComponent,
     NavbarComponent,
     NewsCardComponent,
-    FeaturedNewsComponent,
     FooterComponent,
     SearchComponent,
+    ProfileComponent,
 
   ],
   imports: [

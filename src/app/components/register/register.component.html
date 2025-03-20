@@ -21,13 +21,20 @@
                         <small *ngIf="registerForm.controls['email'].hasError('email')">L'email n'est pas valide.</small>
                     </div>
                 </div>
+                <div class="form-group">
+                  <label>Prénom</label>
+                  <input type="text" formControlName="firstName" placeholder="Votre prénom">
+                  <div *ngIf="registerForm.controls['firstName'].invalid && registerForm.controls['firstName'].touched" class="error-message">
+                    <small *ngIf="registerForm.controls['firstName'].hasError('required')">Le pseudo est requis.</small>
+                </div>
+                </div>
 
                 <div class="form-group">
-                    <label>Pseudo</label>
-                    <input type="text" formControlName="pseudo" placeholder="Votre pseudo">
-                    <div *ngIf="registerForm.controls['pseudo'].invalid && registerForm.controls['pseudo'].touched" class="error-message">
-                        <small *ngIf="registerForm.controls['pseudo'].hasError('required')">Le pseudo est requis.</small>
-                    </div>
+                  <label>Nom</label>
+                  <input type="text" formControlName="lastName" placeholder="Votre nom">
+                  <div *ngIf="registerForm.controls['lastName'].invalid && registerForm.controls['lastName'].touched" class="error-message">
+                    <small *ngIf="registerForm.controls['lastName'].hasError('required')">Le pseudo est requis.</small>
+                </div>
                 </div>
 
                 <div class="form-group">
