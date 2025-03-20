@@ -14,14 +14,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { registerLocaleData } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import localeFr from '@angular/common/locales/fr';
 import { NewsService } from './services/news.service';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { HeaderComponent } from './header/header.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { NewsCardComponent } from './news-card/news-card.component';
-import { FeaturedNewsComponent } from './featured-news/featured-news.component';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { NewsCardComponent } from './components/news-card/news-card.component';
+import { FeaturedNewsComponent } from './components/featured-news/featured-news.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { SearchComponent } from './components/search/search.component';
 
 
@@ -50,6 +51,7 @@ registerLocaleData(localeFr);
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
     provideFirebaseApp(() => initializeApp({"projectId":"newsapp-47394","appId":"1:817937810570:web:14a27c4723cc6e4f4b5973","storageBucket":"newsapp-47394.firebasestorage.app","apiKey":"AIzaSyAG09VdAuUlGNpVVdbzQCQxRoN5faLgwAk","authDomain":"newsapp-47394.firebaseapp.com","messagingSenderId":"817937810570","measurementId":"G-DLJX5B02YX"})),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
