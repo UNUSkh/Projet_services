@@ -39,6 +39,7 @@ export class RegisterComponent {
       try {
         await this.authService.register(email, password);
         this.successMessage = "Inscription réussie ! Un email de vérification a été envoyé.";
+        this.router.navigate(['/login']);
       } catch (error: any) {
         this.errorMessage = "Erreur d'inscription : " + error.message;
       }
