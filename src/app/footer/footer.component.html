@@ -1,0 +1,43 @@
+<!-- footer.component.html -->
+<footer class="footer-container">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <div class="logo-container">
+        <h2>FlashActu</h2>
+        <p>Votre actu en un éclair</p>
+      </div>
+    </div>
+
+    <div class="footer-categories">
+      <h3>Categories</h3>
+      <div class="category-grid">
+        <a *ngFor="let category of categories"
+           [routerLink]="category.routerLink"
+           class="category-tag"
+           [ngClass]="category.name.toLowerCase()">
+          {{ category.name }}
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-account">
+      <h3>Mon compte</h3>
+      <div class="account-container">
+        <div class="user-info">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Username" disabled value="Jean-François Dupont">
+        </div>
+        <button class="logout-btn">Se déconnecter</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {{ currentYear }} Votre actu en un éclair. Tous droits réservés.</p>
+    <div class="social-icons">
+      <a *ngFor="let social of socialLinks" [href]="social.url" class="social-icon" [attr.aria-label]="social.name">
+        <i [class]="social.icon"></i>
+      </a>
+    </div>
+  </div>
+</footer>
