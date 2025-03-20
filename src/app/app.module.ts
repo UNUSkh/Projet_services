@@ -21,6 +21,7 @@ import { HeaderComponent } from './header/header.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NewsCardComponent } from './news-card/news-card.component';
 import { FeaturedNewsComponent } from './featured-news/featured-news.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 registerLocaleData(localeFr);
@@ -38,6 +39,7 @@ registerLocaleData(localeFr);
     NavbarComponent,
     NewsCardComponent,
     FeaturedNewsComponent,
+    FooterComponent,
 
   ],
   imports: [
