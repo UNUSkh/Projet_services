@@ -22,6 +22,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NewsCardComponent } from './news-card/news-card.component';
 import { FeaturedNewsComponent } from './featured-news/featured-news.component';
 import { FooterComponent } from './footer/footer.component';
+import { SearchComponent } from './components/search/search.component';
 
 
 registerLocaleData(localeFr);
@@ -40,6 +41,7 @@ registerLocaleData(localeFr);
     NewsCardComponent,
     FeaturedNewsComponent,
     FooterComponent,
+    SearchComponent,
 
   ],
   imports: [
