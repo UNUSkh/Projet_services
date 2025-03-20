@@ -1,7 +1,18 @@
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('../../../assets/Oswald-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .main-nav {
   background-color: #222;
-  padding: 0 16px;
+  padding-top: 6px; /* Add height to the top of the navbar *//* Ensure no extra padding at the bottom */
+  padding-left: 16px; /* Horizontal padding for navbar */
+  padding-right: 16px;
+  height: 47.5px;
 }
+
 
 .nav-container {
   display: flex;
@@ -26,22 +37,39 @@
 .nav-links li a {
   color: white;
   text-decoration: none;
-  font-size: 14px;
-  text-transform: uppercase;
+  font-size: 20px;
   padding: 16px 0;
   display: block;
   cursor: pointer;
+  font-family: MyCustomFont;
+  font-weight: 100;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
 }
+
+.nav-links li a:hover {
+  color: red; /* Changes text color to red when hovered */
+}
+
 
 .nav-links li.active a {
-  border-bottom: 2px solid #d32f2f;
+  background-color: #d32f2f; /* Red background for active link */
+  color: white; /* Ensures text stays white on red background */
+  padding: 12px 20px; /* Keeps padding for top and bottom */
+  position: relative; /* To position the pseudo-element */
 }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  color: white;
+.nav-links li.active a::after {
+  content: '';
+  position: absolute;
+  bottom: 11px; /* Moves the border up */
+  left: 50%; /* Start from the middle of the link */
+  width: 50%; /* Set the width of the border */
+  height: 0.5px;
+  background-color: white; /* Black bottom border */
+  transform: translateX(-50%); /* Centers the border by shifting it left */
 }
+
+
 
 .user-profile {
   margin-right: 16px;

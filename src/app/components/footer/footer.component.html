@@ -1,43 +1,62 @@
-<!-- footer.component.html -->
-<footer class="footer-container">
-  <div class="footer-content">
-    <div class="footer-logo">
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-left">
       <div class="logo-container">
-        <h2>FlashActu</h2>
-        <p>Votre actu en un éclair</p>
+        <img src="assets/logo.png" alt="FlashActu" class="logo">
       </div>
-    </div>
-
-    <div class="footer-categories">
-      <h3>Categories</h3>
-      <div class="category-grid">
-        <a *ngFor="let category of categories"
-           [routerLink]="category.routerLink"
-           class="category-tag"
-           [ngClass]="category.name.toLowerCase()">
-          {{ category.name }}
+      <p class="copyright">© 2025 Votre Actu en un éclair. Tous droits réservés.</p>
+      
+      <div class="social-icons">
+        <a href="https://www.facebook.com" target="_blank" class="facebook">
+          <img src="../../../assets/facebook.jpg" alt="Facebook">
+        </a>
+        <a href="https://twitter.com" target="_blank" class="twitter">
+          <img src="../../../assets/twitter.jpg" alt="Twitter">
+        </a>
+        <a href="https://www.instagram.com" target="_blank" class="instagram">
+          <img src="../../../assets/instagram.jpg" alt="Instagram">
+        </a>
+        <a href="https://www.youtube.com" target="_blank" class="youtube">
+          <img src="../../../assets/youtube.jpg" alt="YouTube">
         </a>
       </div>
+      
+    
     </div>
-
-    <div class="footer-account">
-      <h3>Mon compte</h3>
-      <div class="account-container">
-        <div class="user-info">
-          <i class="fas fa-user"></i>
-          <input type="text" placeholder="Username" disabled value="Jean-François Dupont">
+    
+    <!-- Middle section with categories -->
+    <div class="footer-center">
+      <h5>Categories</h5>
+      <div class="separator">
+        <div class="separator-red"></div>
+        <div class="separator-white"></div>
+      </div>
+      <div class="categories">
+        <div class="category-row">
+          <span class="category Tendance">Tendance</span>
+          <span class="category Sport">Sport</span>
+          <span class="category Science">Science</span>
+          <span class="category Business">Business</span>
         </div>
-        <button class="logout-btn">Se déconnecter</button>
+        <div class="category-row">
+          <span class="category Divertissement">Divertissement</span>
+          <span class="category Technologie">Technologie</span>
+          <span class="category Santé">Santé</span>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>&copy; {{ currentYear }} Votre actu en un éclair. Tous droits réservés.</p>
-    <div class="social-icons">
-      <a *ngFor="let social of socialLinks" [href]="social.url" class="social-icon" [attr.aria-label]="social.name">
-        <i [class]="social.icon"></i>
-      </a>
+    
+    <div class="footer-right">
+      <h5>Mon compte</h5>
+      <div class="separator">
+        <div class="separator-red"></div>
+        <div class="separator-white"></div>
+      </div>
+      <div class="user-info">
+        <img src="../../../assets/person.jpg" alt="User" class="person-icon">
+        <input type="text" value="Jean-François Dupont">
+      </div>
+      <button class="btn-disconnect">Se déconnecter</button>
     </div>
   </div>
 </footer>
