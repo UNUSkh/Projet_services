@@ -15,7 +15,12 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { NewsService } from './services/news.service';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { HeaderComponent } from './header/header.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NewsCardComponent } from './news-card/news-card.component';
+import { FeaturedNewsComponent } from './featured-news/featured-news.component';
 
 
 registerLocaleData(localeFr);
@@ -28,7 +33,11 @@ registerLocaleData(localeFr);
     LoginComponent,
     HomeComponent,
     ForgotPasswordComponent,
-
+    NewsListComponent,
+    HeaderComponent,
+    NavbarComponent,
+    NewsCardComponent,
+    FeaturedNewsComponent,
 
   ],
   imports: [

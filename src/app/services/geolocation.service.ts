@@ -3,20 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root' // Fournit le service globalement
+  providedIn: 'root'
 })
 export class GeolocationService {
   private locationSubject = new BehaviorSubject<string>('Localisation en cours...');
-  location$: Observable<string> = this.locationSubject.asObservable(); // ✅ Correction ici
+  location$: Observable<string> = this.locationSubject.asObservable();
 
-  private isFetchingLocation = false; // Empêche les requêtes multiples
+  private isFetchingLocation = false;
 
   constructor(private http: HttpClient) {
     this.getLocation();
   }
 
   getLocation() {
-    if (this.isFetchingLocation) return; // Empêche de refaire plusieurs requêtes
+    if (this.isFetchingLocation) return;
     this.isFetchingLocation = true;
 
     if (navigator.geolocation) {
@@ -25,7 +25,6 @@ export class GeolocationService {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
-          // Appel API OpenStreetMap pour récupérer le nom du lieu et du pays
           this.http.get<any>(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
             .subscribe(data => {
               if (data && data.address) {
@@ -44,10 +43,10 @@ export class GeolocationService {
           this.handleGeolocationError(error);
           this.isFetchingLocation = false;
         },
-        { timeout: 10000 } // Timeout après 10 secondes si l'utilisateur ne répond pas
+        { timeout: 10000 }
       );
     } else {
-      this.locationSubject.next('❌ Géolocalisation non supportée par le navigateur');
+      this.locationSubject.next('Géolocalisation non supportée par le navigateur');
     }
   }
 
