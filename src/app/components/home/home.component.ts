@@ -9,7 +9,8 @@ import { GeolocationService } from '../../services/geolocation.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-    newsData: any[] = [];  // Déclare la variable qui contiendra les données
+  
+  newsData: any[] = [];  // Déclare la variable qui contiendra les données
     today: Date = new Date();
     location: string = 'Chargement de la localisation...';
     randomNews: string = 'Chargement des actualités...';
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
     this.fetchBreakingNews();
     // Utilisation du service pour récupérer les données
     this.NewsService.getNews().subscribe(data => {
+      console.log('Données reçues:', data); 
       this.newsData = data;  // Assigner les données récupérées à la variable
     });
     this.geolocationService.location$.subscribe(loc => {
