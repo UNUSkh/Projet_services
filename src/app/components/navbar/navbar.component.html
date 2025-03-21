@@ -7,17 +7,17 @@
     </ul>
 
     <div class="nav-actions">
-      <div class="user-profile" *ngIf="isLoggedIn">
+      <div class="user-profile" >
         <a routerLink="/profile">
           <i class="fa fa-user">USER</i>
         </a>
       </div>
 
-      <div class="logout-button" *ngIf="isLoggedIn">
+      <div class="logout-button" >
         <button (click)="logout()" class="logout-btn">Se déconnecter</button>
       </div>
 
-      <app-search ></app-search>  <!-- Barre de recherche -->
+      <app-search ></app-search>
     </div>
   </div>
 </nav>

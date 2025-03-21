@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, UserCredential, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, sendEmailVerification } from '@angular/fire/auth';
-import { doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, UserCredential, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, sendEmailVerification, deleteUser, onAuthStateChanged } from '@angular/fire/auth';
+import { deleteDoc, doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -8,8 +9,27 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
   private userSubject = new BehaviorSubject<any>(null);
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  constructor(private auth: Auth, private firestore: Firestore,private router: Router) {
+    onAuthStateChanged(this.auth, (user) => {
+      this.userSubject.next(user);
+    });
+  }
 
+  async deleteUserAccount(uid: string) {
+    try {
+      const userRef = doc(this.firestore, 'users', uid);
+      await deleteDoc(userRef);
+
+      const user = await this.auth.currentUser;
+      if (user) {
+        await deleteUser(user);
+      }
+      console.log('Utilisateur supprimé avec succès');
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'utilisateur:', error);
+      throw error;
+    }
+  }
   isAuthenticated() {
     return this.userSubject.asObservable();
   }
@@ -148,6 +168,7 @@ export class AuthService {
   async logout(): Promise<void> {
     try {
       await signOut(this.auth);
+      this.router.navigate(['/login']);
     } catch (error) {
       console.error("Erreur de déconnexion :", error);
       throw error;

@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
   constructor(private auth: Auth, private router: Router) {}
 
-  canActivate(): Observable<boolean> {
+  canActivate(route: unknown, state: unknown): Observable<boolean> {
     return new Observable<boolean>(observer => {
       this.auth.onAuthStateChanged(user => {
         if (user) {
-          observer.next(true);  
+          observer.next(true);
         } else {
           this.router.navigate(['/login']);
           observer.next(false);

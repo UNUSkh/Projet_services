@@ -71,4 +71,18 @@ export class ProfileComponent implements OnInit {
       this.errorMessage = 'Veuillez remplir tous les champs correctement';
     }
   }
+
+  async deleteaccount() {
+    const user = this.auth.currentUser;
+    if (user) {
+      try {
+        await this.authService.deleteUserAccount(user.uid);
+        this.router.navigate(['/login']);
+      } catch (error) {
+        console.error('Erreur lors de la suppression du compte:', error);
+        this.errorMessage = 'Erreur lors de la suppression du compte';
+      }
+
+    }
+  }
 }

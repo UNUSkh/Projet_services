@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,10 +13,11 @@ export class RegisterComponent {
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private authService: AuthService,private router: Router) {
+  constructor(private auth: Auth,private fb: FormBuilder, private authService: AuthService,private router: Router) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      pseudo: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, this.passwordMatchValidator]],
       rememberMe: [false]
@@ -31,7 +33,7 @@ export class RegisterComponent {
   }
 
   async onSubmit() {
-    if (this.registerForm.valid) {
+    if (this.registerForm.valid && this.registerForm.value.password === this.registerForm.value.confirmPassword) {
       const { email, password } = this.registerForm.value;
       this.errorMessage = null;
       this.successMessage = null;
@@ -39,6 +41,8 @@ export class RegisterComponent {
       try {
         await this.authService.register(email, password , this.registerForm.value.firstName, this.registerForm.value.lastName);
         this.successMessage = "Inscription réussie ! Un email de vérification a été envoyé.";
+        await this.authService.logout();
+        this.router.navigate(['/login']);
       } catch (error: any) {
         this.errorMessage = "Erreur d'inscription : " + error.message;
       }
