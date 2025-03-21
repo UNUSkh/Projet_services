@@ -9,7 +9,7 @@ import { NewsListComponent } from './components/news-list/news-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
-  { path: '',  component: HomeComponent },
+  { path: '',  component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'home', component: NewsListComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },

@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   navItems = [
     { label: 'Accueil', link: '/', category: 'general', active: true },
     { label: 'Business', link: '/news/business', category: 'business' },
@@ -22,11 +21,13 @@ export class NavbarComponent {
   isSearchVisible = false;
   searchQuery: string = '';
   isLoggedIn: boolean = false;
-  // this.authService.isAuthenticated().subscribe(auth => {
-  //   this.isLoggedIn = auth;
-  // });
-  constructor(private router: Router, private authService: AuthService) {
 
+  constructor(private router: Router, private authService: AuthService) { }
+
+  ngOnInit(): void {
+    this.authService.isAuthenticated().subscribe(user => {
+      this.isLoggedIn = !user;
+    });
   }
 
   toggleSearch() {
@@ -47,24 +48,15 @@ export class NavbarComponent {
   }
 
   navigateToCategory(category: string) {
-    // Réinitialiser l'état actif
     this.navItems.forEach(item => item.active = false);
-
-    // Définir l'élément actif
     const activeItem = this.navItems.find(item => item.category === category);
     if (activeItem) {
       activeItem.active = true;
     }
-
-    // Naviguer vers la catégorie
-    if (category === 'general') {
-      this.router.navigate(['/']);
-    } else {
-      this.router.navigate(['/news', category]);
-    }
+    this.router.navigate([category === 'general' ? '/' : '/news', category]);
   }
 
   onSearchClosed() {
-    // Any additional actions needed when search is closed
+    // Actions supplémentaires quand la recherche est fermée
   }
 }

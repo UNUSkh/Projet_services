@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, UserCredential, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, sendEmailVerification } from '@angular/fire/auth';
 import { doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private userSubject = new BehaviorSubject<any>(null);
   constructor(private auth: Auth, private firestore: Firestore) {}
+
+  isAuthenticated() {
+    return this.userSubject.asObservable();
+  }
+
   async loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
@@ -27,14 +34,8 @@ export class AuthService {
         throw new Error('Access token not found');
       }
 
-      const response = await fetch('https://people.googleapis.com/v1/people/me?personFields=genders', {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-
-      const data = await response.json();
-
-      const gender = data.genders?.[0]?.value || 'not specified';
-
+      // Extraire des informations de l'utilisateur Google
+      const gender = 'not specified';
       const displayName = user.displayName || '';
       const email = user.email || '';
       const names = displayName.split(' ');
@@ -44,9 +45,7 @@ export class AuthService {
 
       const userRef = doc(this.firestore, 'users', user.uid);
       const userDoc = await getDoc(userRef);
-
       if (!userDoc.exists()) {
-
         await setDoc(userRef, {
           firstName,
           lastName,
@@ -54,19 +53,26 @@ export class AuthService {
           email,
           createdAt: new Date(),
           verified,
-          uid:user.uid
+          uid: user.uid
         });
-
+        console.log("Utilisateur ajouté à Firestore !");
       } else {
-        console.log('Utilisateur déjà existant.');
+        await updateDoc(userRef, {
+          firstName,
+          lastName,
+          gender,
+          email,
+          verified
+        });
+        console.log('Utilisateur déjà existant. Mise à jour des informations.');
       }
 
       return { firstName, lastName, gender, email };
     } catch (error) {
-
       throw error;
     }
   }
+
 
 
   async login(email: string, password: string): Promise<UserCredential> {
