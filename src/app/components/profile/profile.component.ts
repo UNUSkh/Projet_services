@@ -1,29 +1,74 @@
-import { Injectable } from '@angular/core';
-import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 import { Auth } from '@angular/fire/auth';
-import { User } from 'firebase/auth';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root'
+@Component({
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class AuthService {
+export class ProfileComponent implements OnInit {
+  profileForm: FormGroup;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
+  user: any = null;
 
-  constructor(private auth: Auth, private firestore: Firestore) { }
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private auth: Auth,
+    private router: Router
+  ) {
+    this.profileForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
 
-  // Récupérer les informations du profil utilisateur depuis Firestore
-  async getUserProfile(uid: string) {
-    const userRef = doc(this.firestore, 'users', uid);
-    const userDoc = await getDoc(userRef);
-    if (userDoc.exists()) {
-      return userDoc.data();
+  ngOnInit(): void {
+    const user = this.auth.currentUser;
+    if (user) {
+      this.loadUserProfile(user.uid);
     } else {
-      throw new Error('Utilisateur non trouvé');
+      this.router.navigate(['/login']);
     }
   }
 
-  // Mettre à jour les informations du profil utilisateur dans Firestore
-  async updateUserProfile(uid: string, updatedData: any) {
-    const userRef = doc(this.firestore, 'users', uid);
-    await updateDoc(userRef, updatedData);
+  // Charger les informations du profil utilisateur
+  async loadUserProfile(uid: string) {
+    try {
+      this.user = await this.authService.getUserProfile(uid);
+      this.profileForm.patchValue({
+        firstName: this.user.firstName,
+        lastName: this.user.lastName,
+        email: this.user.email
+      });
+    } catch (error) {
+      console.error('Erreur lors du chargement du profil:', error);
+      this.errorMessage = 'Impossible de charger le profil';
+    }
+  }
+
+  // Mettre à jour le profil utilisateur
+  async onSubmit() {
+    if (this.profileForm.valid) {
+      const updatedData = this.profileForm.value;
+      const user = this.auth.currentUser;
+
+      if (user) {
+        try {
+          await this.authService.updateUserProfile(user.uid, updatedData);
+          this.successMessage = 'Profil mis à jour avec succès!';
+        } catch (error) {
+          console.error('Erreur lors de la mise à jour du profil:', error);
+          this.errorMessage = 'Erreur lors de la mise à jour du profil';
+        }
+      }
+    } else {
+      this.errorMessage = 'Veuillez remplir tous les champs correctement';
+    }
   }
 }
