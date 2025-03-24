@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GeolocationService } from '../services/geolocation.service';
+import { GeolocationService } from '../../services/geolocation.service';
 
 @Component({
   selector: 'app-header',

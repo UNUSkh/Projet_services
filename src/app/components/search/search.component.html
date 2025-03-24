@@ -1,0 +1,22 @@
+<div class="search-container" [ngClass]="{'active': isSearchVisible}">
+  <button class="search-toggle" (click)="toggleSearch()" aria-label="Toggle search">
+    <i class="fa fa-search"></i>
+  </button>
+
+  <div class="search-input" *ngIf="isSearchVisible">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Rechercher"
+      (keyup.enter)="search()"
+      autofocus>
+
+    <button class="clear-search" *ngIf="searchQuery" (click)="clearSearch()" aria-label="Clear search">
+      <i class="fa fa-times"></i>
+    </button>
+
+    <button class="submit-search" (click)="search()" aria-label="Submit search">
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+</div>
