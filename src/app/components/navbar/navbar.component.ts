@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   navItems = [
     { label: 'Accueil', link: '/', category: 'general', active: true },
     { label: 'Business', link: '/news/business', category: 'business' },
@@ -21,16 +21,57 @@ export class NavbarComponent {
 
   isSearchVisible = false;
   searchQuery: string = '';
+  searchResults: any[] = [];
   isLoggedIn: boolean = false;
-  // this.authService.isAuthenticated().subscribe(auth => {
-  //   this.isLoggedIn = auth;
-  // });
-  constructor(private router: Router, private authService: AuthService) {
+  
+  isLoading = true;
+  featuredNews: any[] = [];
+  errorMessage: string | null = null;
 
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private newsService: NewsService
+  ) {}
+
+  ngOnInit() {
+    this.loadNews();
+  }
+
+  loadNews() {
+    this.isLoading = true;
+    this.newsService.getNews('general', 'fr', 'fr', 4).subscribe(
+      (response) => {
+        if (response && response.data) {
+          this.featuredNews = response.data;
+        } else {
+          this.errorMessage = 'Aucune actualité à afficher';
+        }
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des actualités:', error);
+        this.errorMessage = 'Erreur lors du chargement des actualités';
+        this.isLoading = false;
+      }
+    );
   }
 
   toggleSearch() {
     this.isSearchVisible = !this.isSearchVisible;
+  }
+
+  performSearch() {
+    console.log('Searching for:', this.searchQuery);
+    this.searchResults = this.filterResults(this.searchQuery);
+  }
+
+  filterResults(query: string) {
+    if (!query) return [];
+    return this.featuredNews.filter(item =>
+      item.title.toLowerCase().includes(query.toLowerCase()) || 
+      item.description.toLowerCase().includes(query.toLowerCase())
+    );
   }
 
   search() {
@@ -47,21 +88,12 @@ export class NavbarComponent {
   }
 
   navigateToCategory(category: string) {
-    // Réinitialiser l'état actif
     this.navItems.forEach(item => item.active = false);
-
-    // Définir l'élément actif
     const activeItem = this.navItems.find(item => item.category === category);
     if (activeItem) {
       activeItem.active = true;
     }
-
-    // Naviguer vers la catégorie
-    if (category === 'general') {
-      this.router.navigate(['/']);
-    } else {
-      this.router.navigate(['/news', category]);
-    }
+    category === 'general' ? this.router.navigate(['/']) : this.router.navigate(['/news', category]);
   }
 
   onSearchClosed() {

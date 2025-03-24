@@ -1,0 +1,35 @@
+<div class="news-navbar">
+  <span (click)="setActiveTab('recent')" [class.active]="activeTab === 'recent'">Récent</span>
+  <span (click)="setActiveTab('tendance')" [class.active]="activeTab === 'tendance'">Tendance</span>
+  <span (click)="setActiveTab('plusvues')" [class.active]="activeTab === 'plusvues'">Plus vues</span>
+</div>
+
+<!-- News Content -->
+<div class="news-content">
+  <!-- Recent News -->
+  <div *ngIf="activeTab === 'recent'">
+    <div class="featured-grid">
+      <div class="featured-item" *ngFor="let news of featuredNews | slice:0:4">
+        <app-recent-cards [newsItem]="news" size="medium" [showExcerpt]="true"></app-recent-cards>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trending News -->
+  <div *ngIf="activeTab === 'tendance'">
+    <div class="featured-grid">
+      <div class="featured-item" *ngFor="let news of featuredNews | slice:4:8">
+        <app-recent-cards [newsItem]="news" size="medium" [showExcerpt]="true"></app-recent-cards>
+      </div>
+    </div>
+  </div>
+
+  <!-- Most Viewed News -->
+  <div *ngIf="activeTab === 'plusvues'">
+    <div class="featured-grid">
+      <div class="featured-item" *ngFor="let news of featuredNews | slice:8:12">
+        <app-recent-cards [newsItem]="news" size="medium" [showExcerpt]="true"></app-recent-cards>
+      </div>
+    </div>
+  </div>
+</div>

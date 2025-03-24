@@ -1,0 +1,32 @@
+<div class="carousel">
+    <div class="carousel-container">
+      <div class="news-card" [ngClass]="size">
+        <div class="card-image">
+          <span class="category-badge">{{getCategoryDisplay()}}</span>
+          
+          <a [href]="newsItems[currentIndex].url" target="_blank">
+            <img [src]="getImageUrl()" [alt]="newsItems[currentIndex].title" onerror="this.src='assets/default.png'">
+            <p class="card-excerpt-overlay" *ngIf="showExcerpt && newsItems[currentIndex].description">
+              {{truncateDescription(newsItems[currentIndex].description)}}
+            </p> 
+          </a>
+        </div>
+  
+        <div class="card-content">
+          <h3 class="card-title-overlay">
+            <span class="publish-date">Publié le {{formattedDate}}</span><br/>
+            <a [href]="newsItems[currentIndex].url" target="_blank">
+              {{truncateTitle(newsItems[currentIndex].title)}}
+            </a>
+          </h3>
+  
+          <div class="card-meta-overlay"></div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Carousel Controls -->
+    <button class="carousel-control prev" (click)="prevSlide()">&#10094;</button>
+    <button class="carousel-control next" (click)="nextSlide()">&#10095;</button>
+  </div>
+  

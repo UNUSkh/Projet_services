@@ -13,16 +13,26 @@
         </a>
       </div>
 
-      <div class="auth-buttons" *ngIf="!isLoggedIn">
-        <a routerLink="/login" class="login-btn">Se connecter</a>
-
+      <div class="search-box">
+        <img src="../../assets/person.png" alt="Search" class="search-icon">
+        <input type="text" placeholder="Rechercher" [(ngModel)]="searchQuery" (keyup)="performSearch()">
+        <img src="../../assets/search.png" alt="Search" class="search-icon-right">
       </div>
 
-      <div class="logout-button" *ngIf="isLoggedIn">
-        <button (click)="logout()" class="logout-btn">Se déconnecter</button>
+      <div class="search-results" *ngIf="searchResults.length > 0">
+        <div *ngFor="let result of searchResults" class="search-result-item">
+          <!-- Wrap the result item in an anchor tag -->
+          <a [routerLink]="result.url" class="search-result-link">
+            <div class="result-rectangle">
+              <img [src]="result.image" alt="{{ result.title }}" class="result-image">
+              <div class="result-details">
+                <h3>{{ result.title }}</h3>
+                <p>{{ result.description }}</p>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
-
-      <app-search (searchClosed)="onSearchClosed()"></app-search>
     </div>
   </div>
 </nav>
