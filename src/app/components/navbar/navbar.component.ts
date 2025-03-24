@@ -53,10 +53,12 @@ export class NavbarComponent implements OnInit {
     if (activeItem) {
       activeItem.active = true;
     }
-    this.router.navigate([category === 'general' ? '/' : '/news', category]);
+    this.router.navigate([], {
+      queryParams: { category: category },
+      queryParamsHandling: 'merge',
+    });
   }
 
   onSearchClosed() {
-    // Actions supplémentaires quand la recherche est fermée
   }
 }

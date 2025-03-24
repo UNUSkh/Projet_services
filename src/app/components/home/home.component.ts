@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NewsService } from '../../services/news.service';
 import { AuthService } from '../../services/auth.service';
 import { GeolocationService } from '../../services/geolocation.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,30 +14,33 @@ export class HomeComponent implements OnInit {
     today: Date = new Date();
     location: string = 'Chargement de la localisation...';
     randomNews: string = 'Chargement des actualités...';
-  constructor( 
+    category: string = 'general';
+  constructor(
     private NewsService: NewsService,
     private authService: AuthService,
     private geolocationService: GeolocationService,
-  
-  
+    private route: ActivatedRoute
   ){}
 
   ngOnInit(): void {
     this.fetchBreakingNews();
-    // Utilisation du service pour récupérer les données
-    this.NewsService.getNews().subscribe(data => {
-      this.newsData = data;  // Assigner les données récupérées à la variable
+    this.NewsService.getNews(this.category).subscribe(data => {
+      this.newsData = data;
     });
     this.geolocationService.location$.subscribe(loc => {
       this.location = loc;
     });
+    this.route.queryParams.subscribe(params => {
+      this.category = params['category'] || 'general';
+      this.fetchBreakingNews();
+    });
   }
-  
+
   logout() {
     this.authService.logout();
   }
   fetchBreakingNews(): void {
-    this.NewsService.getNews().subscribe(response => {
+    this.NewsService.getNews(this.category).subscribe(response => {
       const news = response.data;
       if (news && news.length > 0) {
         const ri=Math.floor(Math.random()*news.length);

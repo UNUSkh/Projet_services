@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../../services/news.service';
 import { NewsItem } from '../news-card/news-card.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-featured-news',
@@ -11,16 +12,20 @@ export class FeaturedNewsComponent implements OnInit {
   featuredNews: NewsItem[] = [];
   isLoading: boolean = true;
   errorMessage: string = '';
+  category: string = 'general';
 
-  constructor(private newsService: NewsService) {}
+  constructor(private newsService: NewsService,private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.loadFeaturedNews();
+    this.route.queryParams.subscribe(params => {
+      this.category = params['category'] || 'general';
+      this.loadFeaturedNews();
+    });
   }
 
   loadFeaturedNews() {
     this.isLoading = true;
-    this.newsService.getNews('general', '', 'fr', 100).subscribe(
+    this.newsService.getNews(this.category, '', 'fr', 100).subscribe(
       (response) => {
         if (response && response.data) {
           this.featuredNews = response.data;
