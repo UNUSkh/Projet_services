@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,19 +22,45 @@ export class NavbarComponent implements OnInit {
   isSearchVisible = false;
   searchQuery: string = '';
   isLoggedIn: boolean = false;
+  searchResults: any[] = [];
+  
+  isLoading = true;
+  featuredNews: any[] = [];
+  errorMessage: string | null = null;
 
-  constructor(private router: Router, private authService: AuthService) { }
+
+
+
+  constructor(private router: Router, private authService: AuthService, private newsService: NewsService) { }
 
   ngOnInit(): void {
     this.authService.isAuthenticated().subscribe(user => {
       this.isLoggedIn = !user;
     });
+    this.loadNews()
   }
 
   toggleSearch() {
     this.isSearchVisible = !this.isSearchVisible;
   }
-
+  loadNews() {
+    this.isLoading = true;
+    this.newsService.getNews('general', 'fr', 'fr', 4).subscribe(
+      (response) => {
+        if (response && response.data) {
+          this.featuredNews = response.data;
+        } else {
+          this.errorMessage = 'Aucune actualité à afficher';
+        }
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des actualités:', error);
+        this.errorMessage = 'Erreur lors du chargement des actualités';
+        this.isLoading = false;
+      }
+    );
+  }
   search() {
     if (this.searchQuery.trim()) {
       this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
@@ -46,7 +73,13 @@ export class NavbarComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-
+  filterResults(query: string) {
+    if (!query) return [];
+    return this.featuredNews.filter(item =>
+      item.title.toLowerCase().includes(query.toLowerCase()) || 
+      item.description.toLowerCase().includes(query.toLowerCase())
+    );
+  }
   navigateToCategory(category: string) {
     this.navItems.forEach(item => item.active = false);
     const activeItem = this.navItems.find(item => item.category === category);
@@ -58,7 +91,10 @@ export class NavbarComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
-
+  performSearch() {
+    console.log('Searching for:', this.searchQuery);
+    this.searchResults = this.filterResults(this.searchQuery);
+  }
   onSearchClosed() {
   }
 }

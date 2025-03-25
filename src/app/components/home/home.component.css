@@ -1,0 +1,21 @@
+.news-container {
+    display: flex;
+    gap: 280px; /* Space between components */
+    justify-content: space-between; /* Distribute space evenly */
+    align-items: stretch; /* Make them equal height */
+  }
+  
+  app-decouvrez-news, app-recent-news {
+    flex: 1; /* Each takes equal width */
+    min-width: 45%; /* Prevents one from shrinking too much */
+  }
+  
+  app-recent-news {
+    margin-left: 60px; /* Adjust as needed */
+  }
+
+  app-decouvrez-news {
+    margin-left: 75px;
+    transform: translateY(-19px);
+  }
+  

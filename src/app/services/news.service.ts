@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class NewsService {
   private apiUrl = 'https://api.mediastack.com/v1/news';
-  private accessKey = 'a83209eceaf13619e11a5c8541a4332b';
+  private accessKey = '94fc74fdcdad8f10663fb65e264c83ad';
 
   constructor(private http: HttpClient) { }
 
@@ -41,7 +41,7 @@ export class NewsService {
 // })
 // export class NewsService {
 //   private apiUrl = 'https://api.mediastack.com/v1/news';
-//   private accessKey = '4ac5bcc43070c88005bd26432e4ac8db';
+//   private accessKey = '68f7d1f6246c146b4316f092cfe4050d';
 
 //   constructor(private http: HttpClient) { }
 
@@ -60,15 +60,33 @@ export class NewsService {
 //   providedIn: 'root'
 // })
 // export class NewsService {
-//   private localDataUrl = 'assets/Data.json'; // ✅ Chemin correct
+//   private localDataUrl = 'assets/Data.json'; // Le chemin correct du fichier JSON
 
 //   constructor(private http: HttpClient) { }
 
-//   getNews(): Observable<any> {
+//   // Méthode getNews avec des arguments par défaut
+//   getNews(category: string = 'general', language: string = '', country: string = '', limit: number = 4): Observable<any> {
 //     return this.http.get<any>(this.localDataUrl).pipe(
-//       map(response => response.data), // ✅ Extraire uniquement les données des actualités
-//       tap(news => console.log('Données chargées :', news))
+//       map(response => {
+//         let filteredNews = response.data;
+
+//         // Filtrage des actualités selon les critères
+//         if (category) {
+//           filteredNews = filteredNews.filter((news: any) => news.category === category);
+//         }
+//         if (language) {
+//           filteredNews = filteredNews.filter((news: any) => news.language === language);
+//         }
+//         if (country) {
+//           filteredNews = filteredNews.filter((news: any) => news.country === country);
+//         }
+
+//         // Limiter le nombre d'articles
+//         return filteredNews.slice(0, limit);
+//       }),
+//       tap(news => console.log('Données chargées :', news)) // Debugging
 //     );
 //   }
 // }
+
 

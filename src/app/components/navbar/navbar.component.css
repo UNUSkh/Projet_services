@@ -1,6 +1,16 @@
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('../../../assets/Oswald-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .main-nav {
   background-color: #222;
-  padding: 0 16px;
+  padding-top: 6px; /* Add height to the top of the navbar *//* Ensure no extra padding at the bottom */
+  padding-left: 16px; /* Horizontal padding for navbar */
+  padding-right: 16px;
+  height: 47.5px;
 }
 
 .nav-container {
@@ -26,21 +36,35 @@
 .nav-links li a {
   color: white;
   text-decoration: none;
-  font-size: 14px;
-  text-transform: uppercase;
+  font-size: 20px;
   padding: 16px 0;
   display: block;
   cursor: pointer;
+  font-family: MyCustomFont;
+  font-weight: 100;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: red; /* Changes text color to red when hovered */
 }
 
 .nav-links li.active a {
-  border-bottom: 2px solid #d32f2f;
+  background-color: #d32f2f; /* Red background for active link */
+  color: white; /* Ensures text stays white on red background */
+  padding: 12px 20px; /* Keeps padding for top and bottom */
+  position: relative; /* To position the pseudo-element */
 }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  color: white;
+.nav-links li.active a::after {
+  content: '';
+  position: absolute;
+  bottom: 11px; /* Moves the border up */
+  left: 50%; /* Start from the middle of the link */
+  width: 50%; /* Set the width of the border */
+  height: 0.5px;
+  background-color: white; /* Black bottom border */
+  transform: translateX(-50%); /* Centers the border by shifting it left */
 }
 
 .user-profile {
@@ -77,6 +101,7 @@
 
 .search-container {
   position: relative;
+  z-index: 999;
 }
 
 .search-toggle {
@@ -98,6 +123,16 @@
   z-index: 100;
 }
 
+/* Hover effect for search result items */
+.search-result-item:hover {
+  background-color: #e0e0e0; /* Lighter background when hovering */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+  transform: scale(1.02); /* Slight zoom effect */
+  transition: all 0.3s ease; /* Smooth transition for background color, box-shadow, and scale */
+  cursor: pointer;
+}
+
+
 .search-input input {
   border: 1px solid #ddd;
   padding: 5px 10px;
@@ -115,3 +150,111 @@
   padding: 0 10px;
   cursor: pointer;
 }
+
+.search-box {
+  position: relative; /* To position the search results relative to it */
+  display: flex;
+  align-items: center;
+  background-color: #222222; /* Black background for the search box */
+  padding: 0px 5px;
+  font-family: MyCustomFont;
+}
+
+.search-icon {
+  width: 30px; /* Adjust the size of the image */
+  height: 30px; /* Ensure it stays proportional */
+  object-fit: cover; /* Ensures the image fits well */
+  margin-right: 10px; /* Space between the icon and input field */
+  border-right: 1px solid white; /* White border on the right side */
+  padding-right: 20px; /* Optional padding to adjust spacing */
+}
+
+.search-box input {
+  background-color: #222222; /* Black background for the input */
+  color: white; /* White text color */
+  border: none; /* Remove default border */
+  outline: none; /* Remove outline when focused */
+  padding: 8px 12px;
+  font-size: 16px;
+  width: 200px; /* Adjust the width for the input box */
+  border-radius: 4px;
+  font-family: MyCustomFont;
+}
+
+.search-icon-right {
+  width: 20px; /* Adjust the image size */
+  height: 20px;
+  margin-left: 10px; /* Adds space between the input and the image */
+  object-fit: cover;
+  cursor: pointer; /* Changes cursor when hovering over the image */
+}
+
+.search-box input::placeholder {
+  color: white; /* Placeholder text in white */
+}
+
+/* New search results styles */
+.search-results {
+  display: flex;
+  flex-direction: column;
+  position: absolute; /* Position it relative to its container */
+  top: 255px; /* Moves it down 120px from the top of the containing element */
+  left: 1090px; /* Moves it 20px from the left side */
+  width: 28%;
+  z-index: 1000; /* Ensures it appears on top */
+}
+
+
+.search-result-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: MyCustomFont;
+}
+
+.result-rectangle {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.result-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.result-details {
+  flex: 1;
+}
+
+/* Style the anchor tag around the result items */
+.search-result-link {
+  text-decoration: none; /* Remove the underline from the link */
+  display: block; /* Make it a block element to occupy the full space of the result */
+}
+
+.result-details h3 {
+  font-size: 1rem;
+  margin: 0;
+  font-weight: bold;
+  color: #222222;
+}
+
+.result-details p {
+  font-size: 0.9em;
+  color: #666;
+  text-decoration: none; /* Ensure the paragraph text is not underlined */
+}
+
+/* Hover effect for the result item */
+.search-result-item:hover .result-rectangle {
+  background-color: #f0f0f0; /* Lighten the background color on hover */
+  cursor: pointer; /* Show pointer cursor on hover */
+}
+

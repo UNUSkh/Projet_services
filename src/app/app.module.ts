@@ -25,6 +25,11 @@ import { FeaturedNewsComponent } from './components/featured-news/featured-news.
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { DecouvrezNewsComponent } from './components/decouvrez-news/decouvrez-news.component';
+import { DecouvCardsComponent } from './components/decouv-cards/decouv-cards.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { RecentNewsComponent } from './components/recent-news/recent-news.component';
+import { RecentCardsComponent } from './components/recent-cards/recent-cards.component';
 
 
 registerLocaleData(localeFr);
@@ -45,6 +50,11 @@ registerLocaleData(localeFr);
     FooterComponent,
     SearchComponent,
     ProfileComponent,
+    DecouvrezNewsComponent,
+    DecouvCardsComponent,
+    CarouselComponent,
+    RecentNewsComponent,
+    RecentCardsComponent,
 
   ],
   imports: [

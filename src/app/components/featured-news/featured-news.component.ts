@@ -25,7 +25,9 @@ export class FeaturedNewsComponent implements OnInit {
 
   loadFeaturedNews() {
     this.isLoading = true;
+
     this.newsService.getNews(this.category, '', 'fr', 100).subscribe(
+
       (response) => {
         if (response && response.data) {
           this.featuredNews = response.data;

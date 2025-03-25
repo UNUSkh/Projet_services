@@ -7,17 +7,33 @@
     </ul>
 
     <div class="nav-actions">
-      <div class="user-profile" >
+      <div class="user-profile" *ngIf="isLoggedIn">
+          
+        
+      </div>
+
+      <div class="search-box">
         <a routerLink="/profile">
-          <i class="fa fa-user">USER</i>
+          <img src="../../assets/person.png" alt="Search" class="search-icon">
         </a>
+          <input type="text" placeholder="Rechercher" [(ngModel)]="searchQuery" (keyup)="performSearch()">
+        <img src="../../assets/search.png" alt="Search" class="search-icon-right">
       </div>
 
-      <div class="logout-button" >
-        <button (click)="logout()" class="logout-btn">Se déconnecter</button>
+      <div class="search-results" *ngIf="searchResults.length > 0">
+        <div *ngFor="let result of searchResults" class="search-result-item">
+         
+          <a [routerLink]="result.url" class="search-result-link">
+            <div class="result-rectangle">
+              <img [src]="result.image" alt="{{ result.title }}" class="result-image">
+              <div class="result-details">
+                <h3>{{ result.title }}</h3>
+                <p>{{ result.description }}</p>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
-
-      <app-search ></app-search>
     </div>
   </div>
 </nav>

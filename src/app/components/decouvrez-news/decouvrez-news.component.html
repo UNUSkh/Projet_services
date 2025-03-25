@@ -1,0 +1,50 @@
+<section class="featured-news-section">
+  <div class="section-title">
+    <h2>Découvrez vos News</h2>
+  </div>
+
+  <!-- Loading spinner -->
+  <div class="loading-spinner" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Chargement des actualités...</p>
+  </div>
+
+  <!-- Error message -->
+  <div class="error-message" *ngIf="!isLoading && errorMessage">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Featured news grid -->
+  <div class="featured-grid" *ngIf="!isLoading && !errorMessage && featuredNews.length > 0">
+    <!-- First row: Main large item carousel -->
+    <div class="featured-main">
+      <app-carousel [newsItems]="featuredNews" size="large" [showExcerpt]="true"></app-carousel>
+    </div>
+
+    <div class="featured-secondary" *ngIf="featuredNews[1]">
+      <app-decouv-cards
+        [newsItem]="featuredNews[1]"
+        size="medium"
+        [showExcerpt]="false">
+      </app-decouv-cards>
+    </div>
+
+    <div class="featured-secondary" *ngIf="featuredNews[2]">
+      <app-decouv-cards
+        [newsItem]="featuredNews[2]"
+        size="medium"
+        [showExcerpt]="false">
+      </app-decouv-cards>
+    </div>
+
+    <!-- Second row: MAIN large item again + fourth item -->
+    <div class="featured-main" *ngIf="featuredNews[3]">
+      <app-decouv-cards
+        [newsItem]="featuredNews[3]"
+        size="medium"
+        [showExcerpt]="true">
+      </app-decouv-cards>
+    </div>
+
+  </div>
+</section>

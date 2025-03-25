@@ -1,10 +1,33 @@
 <div class="header-container">
   <div class="top-bar">
     <div class="location-weather">
+      <img src="../../assets/clear-sky.png" alt="Weather Icon" class="weather-icon"> <!-- Image before the weather -->
       <span class="temperature">{{temperature}} {{location}}</span>
+      
+      <img src="../../assets/clock.png" alt="Date Icon" class="date-icon"> <!-- Image before the date -->
       <span class="date">{{ currentDate | date:'EEEE, d MMMM yyyy':'':'fr' }}</span>
     </div>
     <div class="category-tag">Actualité</div>
+    <div class="news-text">
+      <span>Aux Etas-Unis, l'administration Trump fait marche arrière sur le gel d'aides publiques</span>
+    </div>
+     <!-- Circle images -->
+     <div class="circle-images">
+      <a href="https://www.facebook.com" target="_blank">
+        <img src="../../assets/fb.png" alt="Facebook" class="circle-image">
+      </a>
+      <a href="https://www.instagram.com" target="_blank">
+        <img src="../../assets/insta.png" alt="Instagram" class="circle-image">
+      </a>
+      <a href="https://twitter.com" target="_blank">
+        <img src="../../assets/x.png" alt="Twitter" class="circle-image">
+      </a>
+      <a href="https://www.youtube.com" target="_blank">
+        <img src="../../assets/ytb.png" alt="YouTube" class="circle-image">
+      </a>
+    </div>
+    
+
     <div class="social-links">
       <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" class="social-icon">
         <i [class]="social.icon"></i>
@@ -14,11 +37,10 @@
 
   <div class="logo-container">
     <div class="logo">
-      <a routerLink="/">
-        <img src="assets/logo.png" alt="FlashActu Logo" *ngIf="false">
-        <div class="brand-name">{{logo}}</div>
-        <div class="tagline">{{tagline}}</div>
-      </a>
+        <a routerLink="/">
+            <img src="../../assets/logo.png" alt="FlashActu Logo" >
+        </a>
     </div>
-  </div>
+</div>
+
 </div>
