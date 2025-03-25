@@ -8,11 +8,11 @@ import { tap } from 'rxjs';
 })
 export class NewsService {
   private apiUrl = 'https://api.mediastack.com/v1/news';
-  private accessKey = '6dbb5aa15ea719eb010f216df00d81c5';
+  private accessKey = '68f7d1f6246c146b4316f092cfe4050d';
 
   constructor(private http: HttpClient) { }
 
-  getNews(categories: string = '', countries: string = 'fr', language: string = 'fr', limit: number = 100): Observable<any> {
+  getNews(categories: string = '', countries: string = '', language: string = 'fr', limit: number = 100): Observable<any> {
     // Initialisation des paramètres HTTP
     let params = new HttpParams()
       .set('access_key', this.accessKey)

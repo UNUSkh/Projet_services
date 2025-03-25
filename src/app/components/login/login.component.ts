@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null;
+  private userSubject = new BehaviorSubject<any>(null);
+  currentUser = this.userSubject.asObservable();
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
@@ -27,7 +30,7 @@ export class LoginComponent {
       try {
         await this.authService.login(email, password);
         console.log('Connexion réussie');
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       } catch (error: any) {
         this.handleError(error);
         console.log("Erreur :", error);
@@ -62,8 +65,8 @@ export class LoginComponent {
     try {
       await this.authService.loginWithGoogle();
       console.log("Connexion avec Google réussie !");
-      
-      this.router.navigate(['/home']);
+
+      this.router.navigate(['/']);
     } catch (error) {
       console.error("Erreur d'authentification Google :", error);
     }

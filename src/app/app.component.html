@@ -1,7 +1,7 @@
-<app-header></app-header>
-<app-navbar></app-navbar>
+<app-header *ngIf="isLoggedIn"></app-header>
+<app-navbar *ngIf="isLoggedIn"></app-navbar>
+
 <main>
-  <app-featured-news></app-featured-news>
-  <!-- Autres composants ici -->
+  <router-outlet></router-outlet> <!-- L'élément où les composants seront chargés -->
 </main>
-<app-footer></app-footer>
+<app-footer *ngIf="isLoggedIn"></app-footer>
