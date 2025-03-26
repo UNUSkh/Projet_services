@@ -59,7 +59,7 @@
     gap: 15px;
   }
 
-  
+
   /* First large item (left column) */
   .featured-grid .featured-main:first-child {
     grid-column: 1;

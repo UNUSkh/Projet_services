@@ -3,7 +3,7 @@
     <div class="location-weather">
       <img src="../../assets/clear-sky.png" alt="Weather Icon" class="weather-icon"> <!-- Image before the weather -->
       <span class="temperature">{{temperature}} {{location}}</span>
-      
+
       <img src="../../assets/clock.png" alt="Date Icon" class="date-icon"> <!-- Image before the date -->
       <span class="date">{{ currentDate | date:'EEEE, d MMMM yyyy':'':'fr' }}</span>
     </div>
@@ -11,8 +11,8 @@
     <div class="news-text">
       <span>Aux Etas-Unis, l'administration Trump fait marche arrière sur le gel d'aides publiques</span>
     </div>
-     <!-- Circle images -->
-     <div class="circle-images">
+
+    <div class="circle-images">
       <a href="https://www.facebook.com" target="_blank">
         <img src="../../assets/fb.png" alt="Facebook" class="circle-image">
       </a>
@@ -26,7 +26,7 @@
         <img src="../../assets/ytb.png" alt="YouTube" class="circle-image">
       </a>
     </div>
-    
+
 
     <div class="social-links">
       <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" class="social-icon">

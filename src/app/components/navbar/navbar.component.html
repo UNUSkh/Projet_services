@@ -7,31 +7,31 @@
     </ul>
 
     <div class="nav-actions">
-      <div class="user-profile" *ngIf="isLoggedIn">
-          
-        
-      </div>
+      <div class="search-container">
+        <div class="search-box">
+          <a routerLink="/profile">
+            <img src="../../../assets/person.png" alt="Search" class="search-icon">
+          </a>
+          <input
+            type="text"
+            placeholder="Rechercher"
+            [(ngModel)]="searchQuery"
+            (input)="performSearch()"
+          >
+          <img src="../../../assets/search.png" alt="Search" class="search-icon-right">
+        </div>
 
-      <div class="search-box">
-        <a routerLink="/profile">
-          <img src="../../assets/person.png" alt="Search" class="search-icon">
-        </a>
-          <input type="text" placeholder="Rechercher" [(ngModel)]="searchQuery" (keyup)="performSearch()">
-        <img src="../../assets/search.png" alt="Search" class="search-icon-right">
-      </div>
-
-      <div class="search-results" *ngIf="searchResults.length > 0">
-        <div *ngFor="let result of searchResults" class="search-result-item">
-         
-          <a [routerLink]="result.url" class="search-result-link">
-            <div class="result-rectangle">
-              <img [src]="result.image" alt="{{ result.title }}" class="result-image">
-              <div class="result-details">
-                <h3>{{ result.title }}</h3>
-                <p>{{ result.description }}</p>
+        <div class="search-results-dropdown" *ngIf="searchResults.length > 0">
+          <div class="search-results">
+            <div *ngFor="let result of searchResults" class="search-result-item" (click)="navigateToSearchResult(result)">
+              <div class="result-rectangle">
+                <img [src]="result.image || '../../../assets/default.png'" alt="{{ result.title }}" class="result-image">
+                <div class="result-details">
+                  <h3>{{ result.title }}</h3>
+                </div>
               </div>
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </div>

@@ -168,7 +168,6 @@ export class AuthService {
   async logout(): Promise<void> {
     try {
       await signOut(this.auth);
-      this.router.navigate(['/login']);
     } catch (error) {
       console.error("Erreur de déconnexion :", error);
       throw error;

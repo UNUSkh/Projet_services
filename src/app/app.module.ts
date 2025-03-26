@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { NewsListComponent } from './components/news-list/news-list.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import {HomeComponent} from './components/home/home.component';
@@ -14,9 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { registerLocaleData } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import localeFr from '@angular/common/locales/fr';
-import { NewsService } from './services/news.service';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -30,6 +29,7 @@ import { DecouvCardsComponent } from './components/decouv-cards/decouv-cards.com
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { RecentNewsComponent } from './components/recent-news/recent-news.component';
 import { RecentCardsComponent } from './components/recent-cards/recent-cards.component';
+import { SerachPageComponent } from './components/serach-page/serach-page.component';
 
 
 registerLocaleData(localeFr);
@@ -38,12 +38,10 @@ registerLocaleData(localeFr);
   declarations: [
     AppComponent,
     FeaturedNewsComponent,
-    NewsListComponent,
     RegisterComponent,
     LoginComponent,
     HomeComponent,
     ForgotPasswordComponent,
-    NewsListComponent,
     HeaderComponent,
     NavbarComponent,
     NewsCardComponent,
@@ -55,10 +53,12 @@ registerLocaleData(localeFr);
     CarouselComponent,
     RecentNewsComponent,
     RecentCardsComponent,
+    SerachPageComponent,
 
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     RouterModule.forRoot([]),
     AppRoutingModule,
     ReactiveFormsModule,

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewsListComponent } from './news-list.component';
+import { SerachPageComponent } from './serach-page.component';
 
-describe('NewsListComponent', () => {
-  let component: NewsListComponent;
-  let fixture: ComponentFixture<NewsListComponent>;
+describe('SerachPageComponent', () => {
+  let component: SerachPageComponent;
+  let fixture: ComponentFixture<SerachPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NewsListComponent]
+      declarations: [SerachPageComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(NewsListComponent);
+    fixture = TestBed.createComponent(SerachPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

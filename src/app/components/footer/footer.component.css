@@ -127,7 +127,7 @@
   font-family: MyCustomFont;
   font-size: 25px;
   font-weight: 300;
-  
+
 }
 
 .footer-right {
@@ -248,11 +248,11 @@
     text-align: center;
     max-width: none;
   }
-  
+
   .social-circles {
     justify-content: center;
   }
-  
+
   .separator {
     width: 80%;
     margin-top: 5px;
@@ -277,7 +277,7 @@
     text-align: center;
     max-width: none;
   }
-  
+
   .social-circles {
     justify-content: center;
   }

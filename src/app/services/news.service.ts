@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { map, Observable, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
   private apiUrl = 'https://api.mediastack.com/v1/news';
-  private accessKey = '94fc74fdcdad8f10663fb65e264c83ad';
+  private accessKey = '19f29216447b8303c58c75ebd6b69fc0';
+  private newsData: any[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -23,33 +23,25 @@ export class NewsService {
     }
 
     console.log(`API Call: ${this.apiUrl}?${params.toString()}`);
+
     return this.http.get<any>(this.apiUrl, { params });
   }
+
+  updateNews(news: any[]): void {
+    this.newsData = news;
+  }
+
+searchNews(query: string): Observable<any>  {
+  console.log('Searching for: in searchNews', query);
+  return this.http.get<any>(`${this.apiUrl}?access_key=${this.accessKey}&query=${query}&limit=100`)
 }
 
 
-
-
-
-// import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-// import { tap } from 'rxjs';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class NewsService {
-//   private apiUrl = 'https://api.mediastack.com/v1/news';
-//   private accessKey = '68f7d1f6246c146b4316f092cfe4050d';
-
-//   constructor(private http: HttpClient) { }
-
-//   getNews(): Observable<any> {
-//     console.log(this.http.get<any>(`${this.apiUrl}?access_key=${this.accessKey}&countries=fr`));
-//     return this.http.get<any>(`${this.apiUrl}?access_key=${this.accessKey}&countries=fr`);
-//   }
-// }
+  getStoredNews(): any[] {
+    console.log('Data saved:',this.newsData);
+    return this.newsData;
+  }
+}
 
 // import { Injectable } from '@angular/core';
 // import { HttpClient } from '@angular/common/http';

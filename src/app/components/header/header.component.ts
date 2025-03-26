@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GeolocationService } from '../../services/geolocation.service';
+import { WeatherService } from '../../services/weather-service.service';
 
 @Component({
   selector: 'app-header',
@@ -19,12 +20,26 @@ export class HeaderComponent implements OnInit {
     { name: 'YouTube', icon: 'fa fa-youtube', url: '#' }
   ];
 
-  constructor(private geoService: GeolocationService) {}
+  constructor(private geoService: GeolocationService, private weatherService: WeatherService) {}
 
   ngOnInit() {
     this.geoService.location$.subscribe(loc => {
-      this.location = loc;
+      if (loc) {
+        this.location = loc.location;
+        const { lat, lon } = loc.coords;
+        this.fetchWeather(lat, lon);
+      }
     });
   }
-  
+
+  fetchWeather(lat: number, lon: number) {
+    this.weatherService.getWeather(lat, lon).subscribe(
+      (data) => {
+        this.temperature = `${data.main.temp}°`;
+      },
+      () => {
+        this.temperature = `12°`;
+      }
+    );
+  }
 }
