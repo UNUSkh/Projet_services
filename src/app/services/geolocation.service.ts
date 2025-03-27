@@ -6,8 +6,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GeolocationService {
-  private locationSubject = new BehaviorSubject<string>('Localisation en cours...');
-  location$: Observable<string> = this.locationSubject.asObservable();
+  // Changez le type pour permettre null
+  private locationSubject = new BehaviorSubject<{ location: string; coords: { lat: number; lon: number; } } | null>(null);
+  location$: Observable<{ location: string; coords: { lat: number; lon: number; } } | null> = this.locationSubject.asObservable();
 
   private isFetchingLocation = false;
 
@@ -15,7 +16,7 @@ export class GeolocationService {
     this.getLocation();
   }
 
-  getLocation() {
+  getLocation(): void {
     if (this.isFetchingLocation) return;
     this.isFetchingLocation = true;
 
@@ -29,13 +30,14 @@ export class GeolocationService {
             .subscribe(data => {
               if (data && data.address) {
                 const locationName = `${data.address.city || data.address.town || data.address.village}, ${data.address.country}`;
-                this.locationSubject.next(locationName);
+                this.locationSubject.next({ location: locationName, coords: { lat, lon } });
               } else {
-                this.locationSubject.next('Lieu inconnu');
+                this.locationSubject.next({ location: 'Lieu inconnu', coords: { lat, lon } });
               }
               this.isFetchingLocation = false;
             }, error => {
-              this.locationSubject.next('Erreur lors de la récupération du lieu');
+              console.error('Erreur de récupération du lieu:', error);
+              this.locationSubject.next({ location: 'Erreur lors de la récupération du lieu', coords: { lat, lon } });
               this.isFetchingLocation = false;
             });
         },
@@ -46,23 +48,29 @@ export class GeolocationService {
         { timeout: 10000 }
       );
     } else {
-      this.locationSubject.next('Géolocalisation non supportée par le navigateur');
+      this.locationSubject.next(null);
+      console.log('Géolocalisation non supportée par le navigateur');
     }
   }
 
   private handleGeolocationError(error: GeolocationPositionError) {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        this.locationSubject.next('Accès à la localisation refusé');
+        console.log('Accès à la localisation refusé');
+        this.locationSubject.next({ location: 'Accès à la localisation refusé', coords: { lat: 0, lon: 0 } });
         break;
       case error.POSITION_UNAVAILABLE:
-        this.locationSubject.next('Localisation indisponible');
+        console.log('Localisation indisponible');
+        this.locationSubject.next({ location: 'Localisation indisponible', coords: { lat: 0, lon: 0 } });
         break;
       case error.TIMEOUT:
-        this.locationSubject.next('Temps d’attente dépassé');
+        console.log('Temps d’attente dépassé');
+        this.locationSubject.next({ location: 'Temps d’attente dépassé', coords: { lat: 0, lon: 0 } });
         break;
       default:
-        this.locationSubject.next('Erreur inconnue');
+        console.log('Erreur inconnue');
+        this.locationSubject.next({ location: 'Erreur inconnue', coords: { lat: 0, lon: 0 } });
+        break;
     }
   }
 }

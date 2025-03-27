@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   navItems = [
     { label: 'Accueil', link: '/', category: 'general', active: true },
     { label: 'Business', link: '/news/business', category: 'business' },
@@ -22,10 +22,18 @@ export class NavbarComponent {
   isSearchVisible = false;
   searchQuery: string = '';
   isLoggedIn: boolean = false;
-  // this.authService.isAuthenticated().subscribe(auth => {
-  //   this.isLoggedIn = auth;
-  // });
-  constructor(private router: Router, private authService: AuthService) {
+  searchResults: any[] = [];
+
+  isLoading = true;
+  featuredNews: any[] = [];
+  errorMessage: string | null = null;
+
+  constructor(private router: Router, private authService: AuthService, private newsService: NewsService) { }
+
+  ngOnInit(): void {
+    this.authService.isAuthenticated().subscribe(user => {
+      this.isLoggedIn = !user;
+    });
 
   }
 
@@ -46,25 +54,51 @@ export class NavbarComponent {
     this.router.navigate(['/login']);
   }
 
-  navigateToCategory(category: string) {
-    // Réinitialiser l'état actif
-    this.navItems.forEach(item => item.active = false);
+  filterResults(query: string) {
+    if (!query) return [];
+    return this.featuredNews.filter(item =>
+      item.title.toLowerCase().includes(query.toLowerCase()) ||
+      item.description.toLowerCase().includes(query.toLowerCase())
+    );
+  }
 
-    // Définir l'élément actif
+  navigateToCategory(category: string) {
+    this.navItems.forEach(item => item.active = false);
     const activeItem = this.navItems.find(item => item.category === category);
     if (activeItem) {
       activeItem.active = true;
     }
+    this.router.navigate([], {
+      queryParams: { category: category },
+      queryParamsHandling: 'merge',
+    });
+  }
 
-    // Naviguer vers la catégorie
-    if (category === 'general') {
-      this.router.navigate(['/']);
-    } else {
-      this.router.navigate(['/news', category]);
+  navigateToSearchResult(result: any) {
+    if (result.url) {
+      window.open(result.url, '_blank');
     }
+    this.searchResults = [];
+    this.searchQuery = '';
   }
 
   onSearchClosed() {
-    // Any additional actions needed when search is closed
+  }
+
+  performSearch() {
+    if (this.searchQuery.trim() && this.searchQuery.trim().length > 0) {
+      this.newsService.searchNews(this.searchQuery.trim()).subscribe({
+        next: (results) => {
+          console.log('Search Results:', results);
+          this.searchResults = results.data || [];
+        },
+        error: (err) => {
+          console.error('Search Error:', err);
+          this.searchResults = [];
+        }
+      });
+    } else {
+      this.searchResults = [];
+    }
   }
 }

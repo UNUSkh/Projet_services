@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class NewsService {
   private apiUrl = 'https://api.mediastack.com/v1/news';
-  private accessKey = 'e48e5938dc6b6414b79ef5e2b888c0ff';
+  private accessKey = '6dbb5aa15ea719eb010f216df00d81c5';
 
   constructor(private http: HttpClient) { }
 

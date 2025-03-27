@@ -1,0 +1,26 @@
+<div class="news-card" [ngClass]="size">
+  <div class="card-image">
+    <span class="category-badge">{{getCategoryDisplay()}}</span>
+    <a [href]="newsItem.url" target="_blank">
+      <img [src]="getImageUrl()" [alt]="newsItem.title" onerror="this.src='assets/default.png'">
+    </a>
+  </div>
+
+  <!-- Move the text outside the image -->
+  <div class="card-content">
+    <h3 class="card-title-overlay">
+      <span class="publish-date">Publié le {{formattedDate}}</span>
+      <a [href]="newsItem.url" target="_blank">
+        {{truncateTitle(newsItem.title)}}
+      </a>
+    </h3>
+    <!-- <p class="card-excerpt-overlay" *ngIf="showExcerpt && newsItem.description">
+      {{truncateDescription(newsItem.description)}}
+    </p> -->
+    
+    <div class="card-meta-overlay">
+      
+      <!-- <span class="source" *ngIf="newsItem.source">· {{newsItem.source}}</span> -->
+    </div>
+  </div>
+</div>

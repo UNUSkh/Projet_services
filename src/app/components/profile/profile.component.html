@@ -1,0 +1,29 @@
+<div class="profile-container">
+  <h2>Profil utilisateur</h2>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Prénom</label>
+      <input type="text" formControlName="firstName" placeholder="Prénom" />
+    </div>
+
+    <div class="form-group">
+      <label>Nom</label>
+      <input type="text" formControlName="lastName" placeholder="Nom" />
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" formControlName="email" placeholder="Email" />
+    </div>
+
+    <button type="submit" [disabled]="profileForm.invalid">Mettre à jour</button>
+  </form>
+
+  <div class="form-group">
+    <button class="btn-danger" (click)="deleteaccount()">Supprimer mon compte</button>
+  </div>
+</div>

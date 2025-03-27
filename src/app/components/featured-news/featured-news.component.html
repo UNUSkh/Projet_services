@@ -13,6 +13,7 @@
   </div>
 
   <div class="featured-grid" *ngIf="!isLoading && !errorMessage && featuredNews.length > 0">
+    <!-- First row: MAIN large item + second and third items -->
     <div class="featured-main" *ngIf="featuredNews[0]">
       <app-news-card
         [newsItem]="featuredNews[0]"
@@ -21,12 +22,28 @@
       </app-news-card>
     </div>
 
-    <div class="featured-secondary">
+    <div class="featured-secondary" *ngIf="featuredNews[1]">
       <app-news-card
-        *ngFor="let news of featuredNews.slice(1, 4)"
-        [newsItem]="news"
+        [newsItem]="featuredNews[1]"
         size="medium"
         [showExcerpt]="false">
+      </app-news-card>
+    </div>
+
+    <div class="featured-secondary" *ngIf="featuredNews[2]">
+      <app-news-card
+        [newsItem]="featuredNews[2]"
+        size="medium"
+        [showExcerpt]="false">
+      </app-news-card>
+    </div>
+
+    <!-- Second row: MAIN large item again + fourth item -->
+    <div class="featured-main" *ngIf="featuredNews[3]">
+      <app-news-card
+        [newsItem]="featuredNews[3]"
+        size="medium"
+        [showExcerpt]="true">
       </app-news-card>
     </div>
   </div>

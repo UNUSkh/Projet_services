@@ -7,22 +7,33 @@
     </ul>
 
     <div class="nav-actions">
-      <div class="user-profile" *ngIf="isLoggedIn">
-        <a routerLink="/profile">
-          <i class="fa fa-user"></i>
-        </a>
-      </div>
+      <div class="search-container">
+        <div class="search-box">
+          <a routerLink="/profile">
+            <img src="../../../assets/person.png" alt="Search" class="search-icon">
+          </a>
+          <input
+            type="text"
+            placeholder="Rechercher"
+            [(ngModel)]="searchQuery"
+            (input)="performSearch()"
+          >
+          <img src="../../../assets/search.png" alt="Search" class="search-icon-right">
+        </div>
 
-      <div class="auth-buttons" *ngIf="!isLoggedIn">
-        <a routerLink="/login" class="login-btn">Se connecter</a>
-        <a routerLink="/register" class="register-btn">S'inscrire</a>
+        <div class="search-results-dropdown" *ngIf="searchResults.length > 0">
+          <div class="search-results">
+            <div *ngFor="let result of searchResults" class="search-result-item" (click)="navigateToSearchResult(result)">
+              <div class="result-rectangle">
+                <img [src]="result.image || '../../../assets/default.png'" alt="{{ result.title }}" class="result-image">
+                <div class="result-details">
+                  <h3>{{ result.title }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="logout-button" *ngIf="isLoggedIn">
-        <button (click)="logout()" class="logout-btn">Se déconnecter</button>
-      </div>
-
-      <app-search (searchClosed)="onSearchClosed()"></app-search>
     </div>
   </div>
 </nav>
