@@ -22,17 +22,7 @@
         <button (click)="logout()" class="logout-btn">Se déconnecter</button>
       </div>
 
-      <div class="search-container" [ngClass]="{'active': isSearchVisible}">
-        <button class="search-toggle" (click)="toggleSearch()">
-          <i class="fa fa-search"></i>
-        </button>
-        <div class="search-input" *ngIf="isSearchVisible">
-          <input type="text" [(ngModel)]="searchQuery" placeholder="Rechercher" (keyup.enter)="search()">
-          <button class="submit-search" (click)="search()">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>
+      <app-search (searchClosed)="onSearchClosed()"></app-search>
     </div>
   </div>
 </nav>
