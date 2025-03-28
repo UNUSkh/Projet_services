@@ -51,6 +51,11 @@ export class RegisterComponent {
     }
   }
 
+  redirectToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
+
   handleError(error: any) {
     switch (error.code) {
       case 'auth/email-already-in-use':

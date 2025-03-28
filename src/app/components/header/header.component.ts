@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   fetchWeather(lat: number, lon: number) {
     this.weatherService.getWeather(lat, lon).subscribe(
       (data) => {
-        this.temperature = `${data.main.temp}°`;
+        this.temperature = `${Math.round(data.main.temp)}°`;
       },
       () => {
         this.temperature = `12°`;

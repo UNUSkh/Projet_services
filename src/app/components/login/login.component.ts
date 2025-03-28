@@ -53,12 +53,16 @@ export class LoginComponent {
       case 'auth/too-many-requests':
         this.errorMessage = "Trop de tentatives. Réessayez plus tard.";
         break;
+      case 'auth/email-not-verified':
+        this.errorMessage = "Tu dois vérifier ton mail.";
+        break;
       default:
         this.errorMessage = "Une erreur est survenue. Vérifiez vos informations.";
         break;
     }
-    console.log("❗", this.errorMessage);
+    console.log("", this.errorMessage);
   }
+
 
   async loginWithGoogle() {
     try {

@@ -100,7 +100,7 @@ export class AuthService {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
 
       if (!userCredential.user.emailVerified) {
-        throw new Error("Veuillez vérifier votre email avant de vous connecter.");
+        throw { code: 'auth/email-not-verified', message: 'Tu dois vérifier ton mail' };
       }
 
       return userCredential;
