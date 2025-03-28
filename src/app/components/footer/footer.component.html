@@ -4,8 +4,10 @@
       <div class="logo-container">
         <img src="assets/logo.png" alt="FlashActu" class="logo">
       </div>
-      <p class="copyright">© 2025 Votre Actu en un éclair. Tous droits réservés.</p>
-      
+      <p class="copyright">
+        © {{ currentYear }} Votre Actu en un éclair. Tous droits réservés.
+      </p>
+
       <div class="social-icons">
         <a href="https://www.facebook.com" target="_blank" class="facebook">
           <img src="../../../assets/facebook.jpg" alt="Facebook">
@@ -20,10 +22,8 @@
           <img src="../../../assets/youtube.jpg" alt="YouTube">
         </a>
       </div>
-      
-    
     </div>
-    
+
     <!-- Middle section with categories -->
     <div class="footer-center">
       <h5>Categories</h5>
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="footer-right">
       <h5>Mon compte</h5>
       <div class="separator">
@@ -54,9 +54,9 @@
       </div>
       <div class="user-info">
         <img src="../../../assets/person.png" alt="User" class="person-icon">
-        <input type="text" value="Jean-François Dupont">
+        <input type="text" [value]="userName">
       </div>
-      <button class="btn-disconnect">Se déconnecter</button>
+      <button class="btn-disconnect" (click)="logout()">Se déconnecter</button>
     </div>
   </div>
 </footer>

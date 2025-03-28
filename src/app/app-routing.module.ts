@@ -6,14 +6,15 @@ import { HomeComponent } from './components/home/home.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { AuthGuard } from './services/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
+import { LoginGuard } from './services/login.guard';
 
 const routes: Routes = [
   { path: '',  component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: 'register', component: RegisterComponent, canActivate: [LoginGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [LoginGuard]},
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '',canActivate: [AuthGuard] }
 ];
 
 

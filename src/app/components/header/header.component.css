@@ -1,20 +1,20 @@
 .header-container {
   width: 100%;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: MyCustomFont;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: MyCustomFont, sans-serif; /* ou la police de ton choix */
   color: #666;
 }
 
+/* Top bar */
 .top-bar {
   display: flex;
-  justify-content: center; /* Center the items horizontally */
-  align-items: center; /* Center items vertically */
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 16px;
   font-size: 14px;
   border-bottom: 1px solid #eaeaea;
-  gap: 20px; /* Adjust the space between elements */
-  height: 40px;
+  gap: 20px;
 }
 
 .location-weather {
@@ -22,102 +22,58 @@
   align-items: center;
   gap: 10px;
 }
-
-.weather-icon{
-  width: 20px; /* Adjust the size of the icons */
-  height: 20px; /* Adjust the size of the icons */
-  margin-right: 1px; /* Space between the icon and the text */
+.weather-icon, .date-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
 }
 
-.date-icon {
-  width: 20px; /* Adjust the size of the icons */
-  height: 20px; /* Adjust the size of the icons */
-  margin-right: 1px; /* Space between the icon and the text */
-  margin-left: 50px;
-}
-
-.news-text{
-  margin-right: 100px;
-}
 .category-tag {
   background-color: #d32f2f;
   color: white;
-  padding: 18px 30px;
+  padding: 8px 16px;
+  border-radius: 3px;
 }
 
+.circle-images {
+  display: flex;
+  gap: 8px;
+}
 .circle-image {
-  width: 25px; /* Set the width of the circles */
-  height: 25px; /* Set the height of the circles */
-  border-radius: 50%; /* Make the images circular */
-  object-fit: cover; /* Ensure the image is contained within the circle */
-  transition: transform 0.3s ease; /* Smooth transition for the hover effect */
-  margin-right: 5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
 }
-
 .circle-image:hover {
-  transform: scale(1.2); /* Make the image 20% bigger when hovered */
+  transform: scale(1.1);
 }
 
-
+/* Social links */
 .social-links {
   display: flex;
   gap: 12px;
 }
 
-.social-icon {
-  color: #333;
-  font-size: 16px;
-}
-
+/* Logo container */
 .logo-container {
-  text-align: center;
   display: flex;
-  justify-content: center;
+  padding: 10px 20px;
   align-items: center;
 }
-
-.brand-name {
-  color: #d32f2f;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.tagline {
-  font-size: 12px;
-  color: #666;
-}
-
-
- .logo-container {
-  display: flex; 
-  justify-content: flex-start; 
-  align-items: flex-start; 
-  padding: 10px 0; 
-  margin-left: 120px;
-} 
-
- .logo {
-  display: flex; 
-  justify-content: flex-start; 
-}
-
 .logo img {
-  max-width: 100%; 
-  height: auto; 
-  max-height: 110px; 
-} 
-
-/* .logo-container {
-  padding: 16px;
-  text-align: center;
+  max-height: 60px;
+  height: auto;
 }
 
-.logo img {
-  max-width: 100%; 
-  height: auto; 
-  max-height: 120px; 
-} */
-
-
-
-
+/* =========== Responsive =========== */
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .circle-images {
+    order: -1; /* ex: on place avant ou après selon l’effet voulu */
+  }
+}

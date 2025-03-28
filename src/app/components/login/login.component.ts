@@ -29,8 +29,7 @@ export class LoginComponent {
 
       try {
         await this.authService.login(email, password);
-        console.log('Connexion réussie');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home'], { replaceUrl: true });
       } catch (error: any) {
         this.handleError(error);
         console.log("Erreur :", error);

@@ -6,7 +6,14 @@ import { map, Observable, tap } from 'rxjs';
 })
 export class NewsService {
   private apiUrl = 'https://api.mediastack.com/v1/news';
-  private accessKey = '19f29216447b8303c58c75ebd6b69fc0';
+  private accessKey = '05187fff12f1d56de7205940b6c65aec';
+  private apis =[
+    { url: 'https://api.mediastack.com/v1/news', accessKey: '05187fff12f1d56de7205940b6c65aec' },
+    { url: 'https://api.mediastack.com/v1/news', accessKey: '9c6925081b22e6887b563a01f7137904' },
+    { url: 'https://api.mediastack.com/v1/news', accessKey: '16fc4e8560477f83ce6aa820d285cf7a' },
+    { url: 'https://api.mediastack.com/v1/news', accessKey: 'bc917e7b09cb2b17f93911df3e15fa30' },
+    { url: 'https://api.mediastack.com/v1/news', accessKey: '63db81be8a651bccde7c6200e6e5f069' }
+  ]
   private newsData: any[] = [];
 
   constructor(private http: HttpClient) { }

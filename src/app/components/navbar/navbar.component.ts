@@ -68,10 +68,7 @@ export class NavbarComponent implements OnInit {
     if (activeItem) {
       activeItem.active = true;
     }
-    this.router.navigate([], {
-      queryParams: { category: category },
-      queryParamsHandling: 'merge',
-    });
+    this.router.navigate(['/'], { queryParams: { category: category } });
   }
 
   navigateToSearchResult(result: any) {
@@ -80,6 +77,7 @@ export class NavbarComponent implements OnInit {
     }
     this.searchResults = [];
     this.searchQuery = '';
+    this.isSearchVisible = false;
   }
 
   onSearchClosed() {
